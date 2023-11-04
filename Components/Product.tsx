@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import CurrencyFormat from "react-currency-format";
 import { star } from "./../assets";
 
 const Product = ({ product }: any) => {
@@ -31,13 +30,14 @@ const Product = ({ product }: any) => {
       <p className="text-xs my-2 line-clamp-2">{product.description}</p>
       <div className="mb-5">
         {/* <Currency quantity={product.price * 80} currency="INR" /> */}
-        <CurrencyFormat
+        {/* <CurrencyFormat
           value={product.price * 80}
           displayType={"text"}
           thousandSeparator={true}
           prefix={"₹ "}
           thousandSpacing={"2s"}
-        />
+        /> */}
+        ₹ {product.price * 80}
       </div>
 
       <button className="mt-auto button">Add to Cart</button>
