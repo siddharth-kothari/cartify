@@ -14,7 +14,7 @@ export default async function Home() {
   const products = data.products;
 
   return (
-    <main>
+    <main className="bg-[#f5f5f5]">
       {/* Banner */}
       <Banner />
       {/* Produts */}
