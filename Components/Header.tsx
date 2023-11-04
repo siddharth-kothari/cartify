@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { cart, search } from "./../assets";
 import Image from "next/image";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
   return (
@@ -40,7 +41,7 @@ const Header = () => {
 
           <div className=" flex items-center link">
             <div className="relative">
-              <Image src={cart} alt="cart" className="h-10 w-10" />
+              <ShoppingCartIcon className="h-10 w-10" />
               <span className="bg-yellow-500 text-center rounded-full text-black font-bold absolute -right-1 top-[2px] h-4 w-4">
                 0
               </span>
