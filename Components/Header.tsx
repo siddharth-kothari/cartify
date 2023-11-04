@@ -1,0 +1,68 @@
+import {
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
+import React from "react";
+
+const Header = () => {
+  return (
+    <header>
+      {/* Top Nav */}
+      <div className="bg-[#131921] flex items-center flex-grow px-5 py-2 gap-5">
+        <div className="flex items-center flex-grow sm:flex-grow-0">
+          <Link
+            href="/"
+            className="font-abril text-white text-3xl tracking-wider cursor-pointer"
+          >
+            Cartify
+          </Link>
+        </div>
+        <div className="hidden sm:flex items-center h-10 cursor-pointer bg-yellow-400 hover:bg-yellow-500 flex-grow rounded-md">
+          <input
+            type="text"
+            className="rounded-l-md p-2 px-4 h-full w-6 flex-grow flex-shrink outline-none"
+          />
+          <MagnifyingGlassIcon className="h-12 p-4 font-bold" />
+        </div>
+        <div className="text-white flex items-center text-xs space-x-6 whitespace-nowrap">
+          <div className="link">
+            <p>Hello, SIDDHARTH</p>
+            <p className="font-extrabold md:text-sm">Accounts & Lists</p>
+          </div>
+
+          <div className="link">
+            <p>Returns</p>
+            <p className="font-extrabold md:text-sm">& Orders</p>
+          </div>
+
+          <div className=" flex items-center link">
+            <div className="relative">
+              <ShoppingCartIcon className="h-10" />
+              <span className="bg-yellow-500 text-center rounded-full text-black font-bold absolute -right-1 top-[2px] h-4 w-4">
+                0
+              </span>
+            </div>
+            <p className="hidden sm:block mt-2 font-extrabold md:text-sm">
+              Cart
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Nav */}
+      {/* <div className="bg-[#232f3e] flex items-center space-x-3 p-2 pl-4 text-white text-sm">
+        <p className="link flex items-center">
+          <Bars3Icon className="h-6 mr-1" />
+          All
+        </p>
+        <p className="link">Prime Video</p>
+        <p className="link"></p>
+        <p className="link"></p>
+      </div> */}
+    </header>
+  );
+};
+
+export default Header;
