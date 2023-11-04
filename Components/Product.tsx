@@ -1,9 +1,9 @@
 "use client";
 
-import { StarIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import React, { useState } from "react";
-import Currency from "react-currency-formatter";
+import CurrencyFormat from "react-currency-format";
+import { star } from "./../assets";
 
 const Product = ({ product }: any) => {
   const [rating] = useState(Math.round(product.rating));
@@ -21,16 +21,23 @@ const Product = ({ product }: any) => {
         alt={product.title}
       />
       <h4 className="my-3">{product.title}</h4>
-      <div className="flex">
+      <div className="flex space-x-1">
         {Array(rating)
           .fill(0)
           .map((_, i) => (
-            <StarIcon className="h-5 text-yellow-500" />
+            <Image src={star} alt="star" className="h-5 w-5 text-yellow-500" />
           ))}
       </div>
       <p className="text-xs my-2 line-clamp-2">{product.description}</p>
       <div className="mb-5">
-        <Currency quantity={product.price * 80} currency="INR" />
+        {/* <Currency quantity={product.price * 80} currency="INR" /> */}
+        <CurrencyFormat
+          value={product.price * 80}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"₹ "}
+          thousandSpacing={"2s"}
+        />
       </div>
 
       <button className="mt-auto button">Add to Cart</button>

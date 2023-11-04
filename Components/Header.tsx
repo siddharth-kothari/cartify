@@ -1,10 +1,7 @@
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React from "react";
+import { cart, search } from "./../assets";
+import Image from "next/image";
 
 const Header = () => {
   return (
@@ -24,7 +21,11 @@ const Header = () => {
             type="text"
             className="rounded-l-md p-2 px-4 h-full w-6 flex-grow flex-shrink outline-none"
           />
-          <MagnifyingGlassIcon className="h-12 p-4 font-bold" />
+          <Image
+            src={search}
+            alt="search"
+            className="h-12 w-12 p-4 font-bold"
+          />
         </div>
         <div className="text-white flex items-center text-xs space-x-6 whitespace-nowrap">
           <div className="link">
@@ -39,7 +40,7 @@ const Header = () => {
 
           <div className=" flex items-center link">
             <div className="relative">
-              <ShoppingCartIcon className="h-10" />
+              <Image src={cart} alt="cart" className="h-10 w-10" />
               <span className="bg-yellow-500 text-center rounded-full text-black font-bold absolute -right-1 top-[2px] h-4 w-4">
                 0
               </span>
