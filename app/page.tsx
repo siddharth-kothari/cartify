@@ -1,16 +1,9 @@
 import Banner from "@/Components/Banner";
 import ProductFeed from "@/Components/ProductFeed";
 import { api } from "./api";
-import axios from "axios";
-
-export const getAllProducts = async () => {
-  const res = await api.get("/products");
-  return res;
-};
 
 export default async function Home() {
-  const { data } = await getAllProducts();
-
+  const { data } = await api.get("/products");
   const products = data.products;
 
   return (
