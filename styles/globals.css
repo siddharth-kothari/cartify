@@ -5,7 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+/* @layer components {
     .link {
         @apply cursor-pointer hover:border border-white p-1
     }
@@ -13,4 +13,4 @@
     .button {
         @apply bg-yellow-400 p-2 text-xs md:text-sm rounded-md hover:bg-yellow-500 cursor-pointer focus:outline-none
     }
-}
+} */
