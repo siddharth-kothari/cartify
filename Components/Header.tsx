@@ -9,7 +9,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const Header = () => {
   const { data: session, status } = useSession();
-
+  const name = session?.user?.name?.split(" ");
+  const username = name ? name[0] : "";
   return (
     <header>
       {/* Top Nav */}
@@ -34,10 +35,17 @@ const Header = () => {
           />
         </div>
         <div className="text-white flex items-center text-xs space-x-6 whitespace-nowrap">
-          <div onClick={!session ? signIn : signOut} className="link">
-            <p>{session ? `Hello, ${session.user?.name}` : "Sign in"}</p>
+          <Link href="/login" className="link">
+            <p>
+              Hello,
+              {session ? (
+                <span className="uppercase"> {username}</span>
+              ) : (
+                <span> Sign in</span>
+              )}
+            </p>
             <p className="font-extrabold md:text-sm">Accounts & Lists</p>
-          </div>
+          </Link>
 
           <div className="link">
             <p>Returns</p>
