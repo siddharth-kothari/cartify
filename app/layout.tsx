@@ -1,6 +1,7 @@
 import Header from "@/Components/Header";
 import type { Metadata } from "next";
 import "./../styles/globals.css";
+import AuthProvider from "./../utils/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Cartify",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
