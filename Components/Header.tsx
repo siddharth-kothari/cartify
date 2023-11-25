@@ -6,11 +6,16 @@ import { cart, search } from "./../assets";
 import Image from "next/image";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useSelector } from "react-redux";
+import { selectItems } from "@/slices/cartSlice";
+import { RootState } from "@/utils/store";
 
 const Header = () => {
   const { data: session, status } = useSession();
   const name = session?.user?.name?.split(" ");
   const username = name ? name[0] : "";
+  const items = useSelector((state: RootState) => state.cart.count);
+
   return (
     <header>
       {/* Top Nav */}
@@ -56,7 +61,7 @@ const Header = () => {
             <Link href="/cart" className="relative">
               <ShoppingCartIcon className="h-10 w-10" />
               <span className="bg-yellow-500 text-center rounded-full text-black font-bold absolute -right-1 top-[2px] h-4 w-4">
-                0
+                {items}
               </span>
             </Link>
             <p className="hidden sm:block mt-2 font-extrabold md:text-sm">
