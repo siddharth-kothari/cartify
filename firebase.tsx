@@ -1,5 +1,3 @@
-import firebase from "firebase";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDHzXVNZiqNBxyoMGmahNa2d35OJQfhnh4",
   authDomain: "cartify-5cc02.firebaseapp.com",
