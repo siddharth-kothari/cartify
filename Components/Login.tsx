@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -17,6 +17,11 @@ const Login = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
+
+  if (session) {
+    router.push("/");
+  }
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
