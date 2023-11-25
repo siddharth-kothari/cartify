@@ -35,15 +35,19 @@ export const cartSlice = createSlice({
       saveCartToLocalStorage(state.items);
     },
     loadCartFromLocalStorage: (state) => {
-      const storedCart = localStorage.getItem("cart");
-      state.items = storedCart ? JSON.parse(storedCart) : [];
-      state.count = state.items.length;
+      if (typeof window !== "undefined" && window.localStorage) {
+        const storedCart = localStorage.getItem("cart");
+        state.items = storedCart ? JSON.parse(storedCart) : [];
+        state.count = state.items.length;
+      }
     },
   },
 });
 
 const saveCartToLocalStorage = (cartItems: CartItem[]) => {
-  localStorage.setItem("cart", JSON.stringify(cartItems));
+  if (typeof window !== "undefined" && window.localStorage) {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }
 };
 
 export const selectItems = (state: any) => state.cart.items;
