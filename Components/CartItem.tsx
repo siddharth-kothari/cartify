@@ -29,27 +29,30 @@ const CartItem = ({ item }: any) => {
 
       <div className="col-span-3 mx-5 grid gap-y-5 place-content-start">
         <p className="text-black">{item.name}</p>
-        <div className="flex space-x-2">
+        <div className="flex space-x-5 items-center">
+          <div className="flex space-x-2 items-center">
+            <button
+              className="button w-8 h-8 p-1"
+              onClick={handleDecreaseQuantity}
+            >
+              <MinusIcon />
+            </button>
+            <p className="text-black">{item.qty}</p>
+            <button
+              className="button w-8 h-8 p-1 "
+              onClick={handleIncreaseQuantity}
+            >
+              <PlusIcon />
+            </button>
+          </div>
+
           <button
-            className="button w-6 h-6 p-1"
-            onClick={handleDecreaseQuantity}
+            onClick={() => removeItemToCart()}
+            className="mt-auto button w-max h-max"
           >
-            <MinusIcon />
-          </button>
-          <p className="text-black">{item.qty}</p>
-          <button
-            className="button w-6 h-6 p-1"
-            onClick={handleIncreaseQuantity}
-          >
-            <PlusIcon />
+            Remove
           </button>
         </div>
-        <button
-          onClick={() => removeItemToCart()}
-          className="mt-auto button w-max h-max"
-        >
-          Remove
-        </button>
       </div>
 
       <div className="flex justify-center">
