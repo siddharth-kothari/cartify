@@ -43,7 +43,7 @@ const Header = () => {
         </div>
         <div className="text-white flex items-center text-xs space-x-6 whitespace-nowrap">
           <div
-            onClick={session ? signOut : () => router.push("/login")}
+            onClick={session ? () => signOut : () => router.push("/login")}
             className="link"
           >
             <p>
