@@ -5,6 +5,8 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { LoginHelper } from "@/utils/loginHelper";
+import bcrypt from "bcryptjs";
 
 interface Errors {
   username?: string;
@@ -41,20 +43,20 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
 
-    // const loginres = await LoginHelper({
-    //   username,
-    //   password,
-    // });
+    const hashedPass = await bcrypt.hash(password, 5);
 
-    // if (loginres && loginres.ok) {
-    //   setUsername("");
-    //   setPassword("");
-    //   setErrors({});
-    //   router.push("/");
-    // }
+    const loginres = await LoginHelper({
+      username,
+      password,
+    });
+
+    if (loginres && loginres.ok) {
+      setUsername("");
+      setPassword("");
+      setErrors({});
+      router.push("/");
+    }
     // Reset the form fields and errors
   };
 

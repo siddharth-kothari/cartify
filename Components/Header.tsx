@@ -9,13 +9,15 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { selectItems } from "@/slices/cartSlice";
 import { RootState } from "@/utils/store";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { data: session, status } = useSession();
   const name = session?.user?.name?.split(" ");
   const username = name ? name[0] : "";
   const items = useSelector((state: RootState) => state.cart.count);
-
+  console.log(session);
+  const router = useRouter();
   return (
     <header>
       {/* Top Nav */}
@@ -40,7 +42,10 @@ const Header = () => {
           />
         </div>
         <div className="text-white flex items-center text-xs space-x-6 whitespace-nowrap">
-          <Link href="/login" className="link">
+          <div
+            onClick={session ? signOut : () => router.push("/login")}
+            className="link"
+          >
             <p>
               Hello,
               {session ? (
@@ -50,7 +55,7 @@ const Header = () => {
               )}
             </p>
             <p className="font-extrabold md:text-sm">Accounts & Lists</p>
-          </Link>
+          </div>
 
           <div className="link">
             <p>Returns</p>

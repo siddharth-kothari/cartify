@@ -2,6 +2,10 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { api } from "@/app/api";
+import bcrypt from "bcryptjs";
+import { useRouter } from "next/navigation";
+import { LoginHelper } from "@/utils/loginHelper";
 
 interface Errors {
   username?: string;
@@ -17,6 +21,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -42,21 +47,36 @@ const Register = () => {
       return;
     }
 
-    // Process the form submission logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
+    const hashedPass = await bcrypt.hash(password, 5);
 
-    // const loginres = await LoginHelper({
-    //   username,
-    //   password,
-    // });
+    const userData = {
+      username: username,
+      email: email,
+      password: hashedPass,
+      mobile: mobile,
+    };
 
-    // if (loginres && loginres.ok) {
-    //   setUsername("");
-    //   setPassword("");
-    //   setErrors({});
-    //   router.push("/");
-    // }
+    var body = JSON.stringify(userData);
+
+    const response = await api.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
+      body
+    );
+
+    if (response.data.status === 201) {
+      const loginres = await LoginHelper({
+        username,
+        password,
+      });
+
+      if (loginres && loginres.ok) {
+        setUsername("");
+        setPassword("");
+        setErrors({});
+        router.push("/");
+      }
+    }
+
     // Reset the form fields and errors
   };
 

@@ -1,7 +1,9 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { api } from "../..";
+import { pool } from "@/utils/dbConfig";
+import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 
 export const options: NextAuthOptions = {
   providers: [
@@ -13,19 +15,35 @@ export const options: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const body = JSON.stringify({
-          identifier: credentials?.username,
-          password: credentials?.password,
-        });
-        const { data: user } = await api.post(
-          "http://127.0.0.1:1337/api/auth/local",
-          body
-        );
+        try {
+          const [existingUser] = await pool.execute(
+            "SELECT * FROM users WHERE email = ?",
+            [credentials?.username]
+          );
+          var password = credentials?.password as string;
 
-        if (user) {
-          return user;
-        } else {
-          return null;
+          if (Array.isArray(existingUser)) {
+            if (existingUser.length > 0) {
+              var user = existingUser[0];
+
+              // Check if 'password' property exists
+              if ("password" in user) {
+                const expectedPassword = user.password;
+                const isPasswordCorrect = await bcrypt.compare(
+                  password,
+                  expectedPassword
+                );
+
+                if (isPasswordCorrect) {
+                  return user;
+                } else {
+                  return null;
+                }
+              }
+            }
+          }
+        } catch (error) {
+          throw new Error(error);
         }
       },
     }),
@@ -35,28 +53,28 @@ export const options: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  // pages: {
-  //   signIn: "/login",
-  // },
+  pages: {
+    signIn: "/login",
+  },
 
-  // session: {
-  //   strategy: "jwt",
-  //   maxAge: 90 * 24 * 60 * 60,
-  // },
+  session: {
+    //strategy: "jwt",
+    maxAge: 90 * 24 * 60 * 60,
+  },
   // jwt: {
   //   signingKey: process.env.NEXTAUTH_SECRET,
   // },
-  // callbacks: {
-  //   async session({ session, token }) {
-  //     //const user = token.user as IUser
-  //     session.user = token.user;
-  //     return session;
-  //   },
-  //   async jwt({ token, user }) {
-  //     if (user) {
-  //       token.user = user;
-  //     }
-  //     return token;
-  //   },
-  // },
+  callbacks: {
+    async session({ session, token }) {
+      //const user = token.user as IUser
+      session.user = token.user;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+  },
 };

@@ -4,7 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
 import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { selectItems, selectTotal } from "@/slices/cartSlice";
 
 const Cart = () => {

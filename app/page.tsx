@@ -3,7 +3,9 @@ import ProductFeed from "@/Components/ProductFeed";
 import { api } from "./api";
 
 export default async function Home() {
-  const { data } = await api.get("/products");
+  const { data } = await api.get(
+    `${process.env.NEXT_PUBLIC_STORE_BASE_URL}products`
+  );
   const products = data.products;
 
   return (
