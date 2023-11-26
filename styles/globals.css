@@ -11,6 +11,6 @@
     }
 
     .button {
-        @apply bg-yellow-400 p-2 text-xs md:text-sm rounded-md hover:bg-yellow-500 cursor-pointer focus:outline-none
+        @apply bg-yellow-400 p-2 text-xs md:text-sm rounded hover:bg-yellow-500 cursor-pointer focus:outline-none
     }
 }

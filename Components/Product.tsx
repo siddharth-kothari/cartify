@@ -17,6 +17,7 @@ const Product = ({ product }: any) => {
       image: product.thumbnail,
       name: product.title,
       price: product.price,
+      qty: 1,
     };
 
     dispatch(addToCart(details));

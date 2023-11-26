@@ -8,6 +8,7 @@ interface CartItem {
   price: number;
   category: string;
   image: string;
+  qty: number;
 }
 
 interface CartState {
@@ -25,12 +26,50 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<any>) => {
-      state.items = [...state.items, action.payload];
+      const existingItem = state.items.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (existingItem) {
+        existingItem.qty += 1;
+      } else {
+        state.items.push({ ...action.payload, qty: 1 });
+      }
+
       state.count = state.items.length;
       saveCartToLocalStorage(state.items);
     },
+
     removeFromCart: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      state.count = state.items.length;
+      saveCartToLocalStorage(state.items);
+    },
+
+    increaseQTY: (state, action) => {
+      const itemToIncrease = state.items.find(
+        (item) => item.id === action.payload
+      );
+      if (itemToIncrease) {
+        itemToIncrease.qty += 1;
+      }
+      state.count = state.items.length;
+      saveCartToLocalStorage(state.items);
+    },
+
+    decreaseQTY: (state, action) => {
+      const itemToDecrease = state.items.find(
+        (item) => item.id === action.payload
+      );
+      if (itemToDecrease) {
+        itemToDecrease.qty -= 1;
+        if (itemToDecrease.qty === 0) {
+          // Remove the item if the quantity becomes zero
+          state.items = state.items.filter(
+            (item) => item.id !== action.payload
+          );
+        }
+      }
       state.count = state.items.length;
       saveCartToLocalStorage(state.items);
     },
@@ -51,7 +90,17 @@ const saveCartToLocalStorage = (cartItems: CartItem[]) => {
 };
 
 export const selectItems = (state: any) => state.cart.items;
+export const selectTotal = (state: any) =>
+  state.cart.items.reduce((total: number, cartItem: any) => {
+    const item = state.cart.items.find((i: any) => i.id === cartItem.id);
+    return total + (item?.price || 0) * cartItem.qty;
+  }, 0);
 
-export const { addToCart, removeFromCart, loadCartFromLocalStorage } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  loadCartFromLocalStorage,
+  increaseQTY,
+  decreaseQTY,
+} = cartSlice.actions;
 export default cartSlice.reducer;
