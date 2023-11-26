@@ -14,35 +14,31 @@ export const options: NextAuthOptions = {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         try {
-          const [existingUser] = await pool.execute(
+          const [existingUser]: any = await pool.execute(
             "SELECT * FROM users WHERE email = ?",
             [credentials?.username]
           );
           var password = credentials?.password as string;
 
-          if (Array.isArray(existingUser)) {
-            if (existingUser.length > 0) {
-              var user = existingUser[0];
+          var user = existingUser[0];
+          //console.log(user.password);
+          if (existingUser.length > 0) {
+            var user = existingUser[0];
 
-              // Check if 'password' property exists
-              if ("password" in user) {
-                const expectedPassword = user.password;
-                const isPasswordCorrect = await bcrypt.compare(
-                  password,
-                  expectedPassword
-                );
+            const isPasswordCorrect = await bcrypt.compare(
+              password,
+              user.password
+            );
 
-                if (isPasswordCorrect) {
-                  return user;
-                } else {
-                  return null;
-                }
-              }
+            if (isPasswordCorrect) {
+              return user;
+            } else {
+              return null;
             }
           }
-        } catch (error) {
+        } catch (error: any) {
           throw new Error(error);
         }
       },
@@ -65,7 +61,7 @@ export const options: NextAuthOptions = {
   //   signingKey: process.env.NEXTAUTH_SECRET,
   // },
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       //const user = token.user as IUser
       session.user = token.user;
       return session;
