@@ -3,7 +3,7 @@ import Product from "./Product";
 
 const ProductFeed = ({ products }: any) => {
   return (
-    <div className="grid grid-flow-row-dense z-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:-mt-40 mx-auto">
+    <div className="grid grid-flow-row-dense z-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:-mt-40 mx-auto px-20">
       {products.slice(0, 4).map((product: any) => (
         <Product product={product} key={product.id} />
       ))}

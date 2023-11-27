@@ -29,7 +29,7 @@ const Product = ({ product }: any) => {
         src={product.thumbnail}
         width={200}
         height={200}
-        className="h-[200px] mx-auto"
+        className="h-[200px] mx-auto object-contain"
         objectFit="contain"
         alt={product.title}
       />
