@@ -1,15 +1,61 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Profile } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { pool } from "@/utils/dbConfig";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { User as AuthUser, Account } from "next-auth";
+import { User, Account } from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
 
-interface SignIn {
-  user: AuthUser;
-  account: Account;
-}
+type SignInCallbackParams = {
+  user: User | AdapterUser;
+  account: Account | null;
+  profile?: Profile | undefined;
+  email?: { verificationRequest?: boolean | undefined } | undefined;
+  credentials?: Record<string, unknown> | undefined;
+};
+
+const signInCallback: (
+  params: SignInCallbackParams
+) => Promise<boolean | undefined> = async ({
+  user,
+  account,
+  profile,
+  email,
+  credentials,
+}) => {
+  if (account?.provider == "credentials") {
+    return true;
+  }
+
+  if (account?.provider == "google") {
+    try {
+      const [existingUser]: any = await pool.execute(
+        "SELECT * FROM users WHERE email = ?",
+        [user.email]
+      );
+
+      if (existingUser.length == 0) {
+        const [newUser]: any = await pool.execute(
+          "INSERT INTO users(name,email) VALUES(?,?)",
+          [user.name, user.email]
+        );
+
+        return true;
+      }
+      return true;
+    } catch (error) {
+      console.log("Error saving user: ", error);
+      return false;
+    }
+  }
+};
+
+const callbacks = {
+  signIn: signInCallback,
+
+  // Add other callbacks as needed
+};
 
 export const options: NextAuthOptions = {
   providers: [
@@ -52,35 +98,8 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  callbacks: {
-    async signIn({ user, account }: SignIn) {
-      if (account?.provider == "credentials") {
-        return true;
-      }
 
-      if (account?.provider == "google") {
-        try {
-          const [existingUser]: any = await pool.execute(
-            "SELECT * FROM users WHERE email = ?",
-            [user.email]
-          );
-
-          if (existingUser.length == 0) {
-            const [newUser]: any = await pool.execute(
-              "INSERT INTO users(name,email) VALUES(?,?)",
-              [user.name, user.email]
-            );
-
-            return true;
-          }
-          return true;
-        } catch (error) {
-          console.log("Error saving user: ", error);
-          return false;
-        }
-      }
-    },
-  },
+  callbacks: callbacks as Record<string, (params: any) => Promise<any>>,
   // secret: process.env.NEXTAUTH_SECRET,
   // pages: {
   //   signIn: "/login",
