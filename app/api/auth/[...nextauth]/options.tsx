@@ -10,20 +10,11 @@ import { AdapterUser } from "next-auth/adapters";
 type SignInCallbackParams = {
   user: User | AdapterUser;
   account: Account | null;
-  profile?: Profile | undefined;
-  email?: { verificationRequest?: boolean | undefined } | undefined;
-  credentials?: Record<string, unknown> | undefined;
 };
 
 const signInCallback: (
   params: SignInCallbackParams
-) => Promise<boolean | undefined> = async ({
-  user,
-  account,
-  profile,
-  email,
-  credentials,
-}) => {
+) => Promise<boolean | undefined> = async ({ user, account }) => {
   if (account?.provider == "credentials") {
     return true;
   }

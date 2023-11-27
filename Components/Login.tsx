@@ -137,7 +137,7 @@ const Login = () => {
               <div className="w-full flex">
                 <button
                   type="submit"
-                  className="w-[40%] mx-auto bg-white text-black py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  className="w-[40%] button mx-auto mb-3 py-2 px-4 outline-none"
                 >
                   Sign In
                 </button>
@@ -146,7 +146,7 @@ const Login = () => {
 
             <div className="text-center">
               <button
-                className="text-black"
+                className=" button"
                 onClick={() => {
                   signIn("google");
                 }}
@@ -160,10 +160,7 @@ const Login = () => {
             <p className="text-sm text-gray-400 font-manrope mb-3">
               New to Cartify?
             </p>
-            <Link
-              className="text-sm border rounded-lg px-6 py-1"
-              href="/register"
-            >
+            <Link className="button" href="/register">
               Create your Cartify account
             </Link>
           </div>

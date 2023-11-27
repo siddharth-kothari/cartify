@@ -73,7 +73,7 @@ const Register = () => {
 
     if (response.data.status === 201) {
       const loginres = await LoginHelper({
-        username,
+        username: email,
         password,
       });
 
@@ -200,7 +200,7 @@ const Register = () => {
           <div className="w-full flex">
             <button
               type="submit"
-              className="w-[40%] mx-auto bg-white text-black py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="w-[40%] mx-auto  py-2 px-4 outline-none button"
             >
               Register
             </button>
@@ -212,7 +212,7 @@ const Register = () => {
         <p className="text-sm text-gray-400 font-manrope mb-3">
           Already have an account?
         </p>
-        <Link className="text-sm border rounded-lg px-6 py-1" href="/login">
+        <Link className="button" href="/login">
           Sign in
         </Link>
       </div>

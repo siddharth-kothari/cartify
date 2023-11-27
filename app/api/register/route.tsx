@@ -10,15 +10,15 @@ export async function POST(req: Request) {
       [email]
     );
 
-    if (Array.isArray(existingUser)) {
-      //const arrayLength = existingUser.length;
-      if (existingUser.length > 0) {
-        return NextResponse.json(
-          { message: "Email already exists" },
-          { status: 400 }
-        );
-      }
-    }
+    // if (Array.isArray(existingUser)) {
+    //   //const arrayLength = existingUser.length;
+    //   if (existingUser.length > 0) {
+    //     return NextResponse.json(
+    //       { message: "Email already exists" },
+    //       { status: 400 }
+    //     );
+    //   }
+    // }
     try {
       const [result] = await pool.execute(
         "INSERT INTO users (name, email,password,mobile) VALUES (?, ?,?,?)",
