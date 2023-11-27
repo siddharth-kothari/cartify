@@ -4,6 +4,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { pool } from "@/utils/dbConfig";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { User as AuthUser, Account } from "next-auth";
+
+interface SignIn {
+  user: AuthUser;
+  account: Account;
+}
 
 export const options: NextAuthOptions = {
   providers: [
@@ -20,15 +26,13 @@ export const options: NextAuthOptions = {
             "SELECT * FROM users WHERE email = ?",
             [credentials?.username]
           );
-          var password = credentials?.password as string;
 
           var user = existingUser[0];
-          //console.log(user.password);
           if (existingUser.length > 0) {
             var user = existingUser[0];
 
             const isPasswordCorrect = await bcrypt.compare(
-              password,
+              credentials?.password,
               user.password
             );
 
@@ -48,29 +52,58 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/login",
-  },
-
-  session: {
-    //strategy: "jwt",
-    maxAge: 90 * 24 * 60 * 60,
-  },
-  // jwt: {
-  //   signingKey: process.env.NEXTAUTH_SECRET,
-  // },
   callbacks: {
-    async session({ session, token }: any) {
-      //const user = token.user as IUser
-      session.user = token.user;
-      return session;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
+    async signIn({ user, account }: SignIn) {
+      if (account?.provider == "credentials") {
+        return true;
       }
-      return token;
+
+      if (account?.provider == "google") {
+        try {
+          const [existingUser]: any = await pool.execute(
+            "SELECT * FROM users WHERE email = ?",
+            [user.email]
+          );
+
+          if (existingUser.length == 0) {
+            const [newUser]: any = await pool.execute(
+              "INSERT INTO users(name,email) VALUES(?,?)",
+              [user.name, user.email]
+            );
+
+            return true;
+          }
+          return true;
+        } catch (error) {
+          console.log("Error saving user: ", error);
+          return false;
+        }
+      }
     },
   },
+  // secret: process.env.NEXTAUTH_SECRET,
+  // pages: {
+  //   signIn: "/login",
+  // },
+
+  // session: {
+  //   //strategy: "jwt",
+  //   maxAge: 90 * 24 * 60 * 60,
+  // },
+  // // jwt: {
+  // //   signingKey: process.env.NEXTAUTH_SECRET,
+  // // },
+  // callbacks: {
+  //   async session({ session, token }: any) {
+  //     //const user = token.user as IUser
+  //     session.user = token.user;
+  //     return session;
+  //   },
+  //   async jwt({ token, user }) {
+  //     if (user) {
+  //       token.user = user;
+  //     }
+  //     return token;
+  //   },
+  // },
 };

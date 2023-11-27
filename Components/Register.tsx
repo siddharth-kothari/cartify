@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { api } from "@/app/api";
 import bcrypt from "bcryptjs";
 import { useRouter } from "next/navigation";
 import { LoginHelper } from "@/utils/loginHelper";
+import { useSession } from "next-auth/react";
 
 interface Errors {
   username?: string;
@@ -22,6 +23,13 @@ const Register = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();

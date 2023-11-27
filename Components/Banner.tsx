@@ -3,6 +3,8 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { clothing, gadgets, furniture, groceries } from "@/assets";
+import Image from "next/image";
 
 const Banner = () => {
   return (
@@ -15,17 +17,37 @@ const Banner = () => {
         showThumbs={false}
         interval={5000}
       >
-        <div>
-          <img src="https://links.papareact.com/gi1" loading="lazy" alt="" />
-        </div>
-
-        <div>
-          <img src="https://links.papareact.com/6ff" loading="lazy" alt="" />
-        </div>
-
-        <div>
-          <img src="https://links.papareact.com/7ma" loading="lazy" alt="" />
-        </div>
+        <Image
+          src={clothing}
+          alt="clothing"
+          loading="lazy"
+          quality={50}
+          className="h-[600px] object-fill object-center"
+        />
+        <Image
+          src={gadgets}
+          alt="gadgets"
+          loading="lazy"
+          quality={50}
+          objectFit="contain"
+          className="h-[600px] object-fill object-center"
+        />
+        <Image
+          src={furniture}
+          alt="furniture"
+          loading="lazy"
+          quality={50}
+          objectFit="contain"
+          className="h-[600px] object-fill object-center"
+        />
+        <Image
+          src={groceries}
+          alt="groceries"
+          loading="lazy"
+          quality={50}
+          objectFit="contain"
+          className="h-[600px] object-fill object-center"
+        />
       </Carousel>
     </div>
   );
