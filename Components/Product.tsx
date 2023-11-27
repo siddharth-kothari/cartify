@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { star } from "./../assets";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../slices/cartSlice";
+import Link from "next/link";
 
 const Product = ({ product }: any) => {
   const [rating] = useState(Math.round(product.rating));
@@ -33,7 +34,9 @@ const Product = ({ product }: any) => {
         objectFit="contain"
         alt={product.title}
       />
-      <h4 className="my-3">{product.title}</h4>
+      <Link href={`/product/${product.id}`} className="my-3">
+        {product.title}
+      </Link>
       <div className="flex space-x-1">
         {Array(rating)
           .fill(0)
