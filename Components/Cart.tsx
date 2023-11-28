@@ -23,7 +23,7 @@ const Cart = () => {
   };
 
   return (
-    <section className="md:flex max-w-screen-2xl mx-auto">
+    <section className="md:flex max-w-screen-2xl mx-auto md:px-20">
       <div className="flex m-5 shadow-sm md:w-[75%]">
         <div className="flex flex-col p-5 space-y-10 bg-white w-full">
           <h1 className="text-3xl border-b pb-3">
