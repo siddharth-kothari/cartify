@@ -3,8 +3,13 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { star } from "./../assets";
-import { addToCart, decreaseQTY, increaseQTY } from "@/slices/cartSlice";
-import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  decreaseQTY,
+  increaseQTY,
+  selectItems,
+} from "@/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { api } from "@/app/api";
 import Link from "next/link";
@@ -13,8 +18,13 @@ const ProductDetail = async ({ product }: any) => {
   const [rating] = useState(Math.round(product.rating));
   const [isDescOpen, setIsDescOpen] = useState(true);
   const [reviews, setReviews] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const dispatch = useDispatch();
+
+  // const items = useSelector(selectItems);
+  //const qty = items.find((item: any) => item.id === product.id);
+  //console.log(qty);
 
   useEffect(() => {
     setReviews(Math.floor(Math.random() * 10001));
@@ -23,22 +33,26 @@ const ProductDetail = async ({ product }: any) => {
   const id = product.id;
 
   const handleIncreaseQuantity = () => {
-    dispatch(increaseQTY(id));
+    setCartCount(cartCount + 1);
+    //dispatch(increaseQTY(id));
   };
   const handleDecreaseQuantity = () => {
-    dispatch(decreaseQTY(id));
+    //dispatch(decreaseQTY(id));
+    setCartCount(cartCount - 1);
   };
   const addItemToCart = () => {
-    const details = {
-      id: product.id,
-      category: product.category,
-      image: product.thumbnail,
-      name: product.title,
-      price: product.price,
-      qty: 1,
-    };
+    if (cartCount > 0) {
+      const details = {
+        id: product.id,
+        category: product.category,
+        image: product.thumbnail,
+        name: product.title,
+        price: product.price,
+        qty: cartCount,
+      };
 
-    dispatch(addToCart(details));
+      dispatch(addToCart(details));
+    }
   };
 
   const handleDesc = () => {
@@ -73,7 +87,7 @@ const ProductDetail = async ({ product }: any) => {
           <p className="uppercase tracking-wider text-xs">
             {product.rating > 4.5 ? "best seller" : ""}
           </p>
-          <p className="text-3xl my-1">
+          <p className="text-3xl my-1 capitalize">
             {product.brand === "Apple" ? product.brand : ""} {product.title}
           </p>
           <div className="flex space-x-2 items-center">
@@ -99,7 +113,7 @@ const ProductDetail = async ({ product }: any) => {
               >
                 <MinusIcon />
               </button>
-              <p className="text-black">0</p>
+              <p className="text-black">{cartCount}</p>
               <button
                 className="button w-10 h-10 p-1 "
                 onClick={handleIncreaseQuantity}
@@ -108,7 +122,7 @@ const ProductDetail = async ({ product }: any) => {
               </button>
               <button
                 onClick={() => addItemToCart()}
-                disabled={product.stock > 10}
+                // disabled={product.stock > 10}
                 className="mt-auto button"
               >
                 Add to Cart
@@ -164,7 +178,9 @@ const ProductDetail = async ({ product }: any) => {
               height={200}
             />
             <div>
-              <Link href={`/product/${item.id}`}>{item.title}</Link>
+              <Link href={`/product/${item.id}`} className=" capitalize">
+                {item.title}
+              </Link>
               <p>₹ {item.price * 80}</p>
             </div>
           </div>

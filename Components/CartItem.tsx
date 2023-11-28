@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { decreaseQTY, increaseQTY, removeFromCart } from "../slices/cartSlice";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const CartItem = ({ item }: any) => {
   const dispatch = useDispatch();
@@ -28,7 +29,9 @@ const CartItem = ({ item }: any) => {
       />
 
       <div className="col-span-3 mx-5 grid gap-y-5 place-content-start">
-        <p className="text-black">{item.name}</p>
+        <Link href={`/product/${item.id}`} className="text-black">
+          {item.name}
+        </Link>
         <div className="flex space-x-5 items-center">
           <div className="flex space-x-2 items-center">
             <button
