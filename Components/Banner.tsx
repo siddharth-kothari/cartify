@@ -22,7 +22,7 @@ const Banner = () => {
           alt="clothing"
           loading="lazy"
           quality={50}
-          className="h-[600px] object-fill object-center"
+          className="md:h-[600px] md:object-fill object-contain object-center"
         />
         <Image
           src={gadgets}
@@ -30,7 +30,7 @@ const Banner = () => {
           loading="lazy"
           quality={50}
           objectFit="contain"
-          className="h-[600px] object-fill object-center"
+          className="md:h-[600px] md:object-fill object-contain object-center"
         />
         <Image
           src={furniture}
@@ -38,7 +38,7 @@ const Banner = () => {
           loading="lazy"
           quality={50}
           objectFit="contain"
-          className="h-[600px] object-fill object-center"
+          className="md:h-[600px] md:object-fill object-contain object-center"
         />
         <Image
           src={groceries}
@@ -46,7 +46,7 @@ const Banner = () => {
           loading="lazy"
           quality={50}
           objectFit="contain"
-          className="h-[600px] object-fill object-center"
+          className="md:h-[600px] md:object-fill object-contain object-center"
         />
       </Carousel>
     </div>

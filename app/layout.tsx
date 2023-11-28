@@ -25,7 +25,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="bg-white">
+      <body className="bg-[#f7f7f7]">
         <Provider>
           <Header categories={categories} />
           {children}

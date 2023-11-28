@@ -25,7 +25,7 @@ const Product = ({ product }: any) => {
   };
 
   return (
-    <div className="relative flex flex-col m-5 bg-white z-10 p-10">
+    <div className="relative flex flex-col my-5 bg-white z-10 p-8 shadow-lg">
       <Image
         src={product.thumbnail}
         width={200}

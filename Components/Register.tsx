@@ -98,7 +98,7 @@ const Register = () => {
         Cartify
       </h1>
 
-      <div className="w-full md:w-[40%] mt-5 border rounded-lg p-5 md:px-12 md:py-8">
+      <div className="w-full md:w-[40%] mt-5 border rounded-lg p-5 md:px-12 md:py-8 shadow-xl">
         <h1 className="text-left text-lg font-semibold">Create Account</h1>
 
         <form onSubmit={handleLogin} className="mt-3">

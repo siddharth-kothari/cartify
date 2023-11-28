@@ -36,7 +36,7 @@ const Header = ({ categories }: any) => {
   return (
     <header className="sticky top-0 z-20">
       {/* Top Nav */}
-      <div className="bg-white flex items-center flex-grow px-5 lg:px-20 py-2 gap-5 justify-between">
+      <div className="bg-[#f7f7f7] flex items-center flex-grow px-5 lg:px-20 py-2 gap-5 justify-between">
         <div className="flex items-center flex-grow sm:flex-grow-0">
           <Link
             href="/"
@@ -50,7 +50,7 @@ const Header = ({ categories }: any) => {
           <div className="hidden border-b border-black sm:flex items-center  cursor-pointer  flex-grow">
             <input
               type="text"
-              className="h-full flex-grow  outline-none"
+              className="h-full flex-grow bg-[#f7f7f7] outline-none b"
               placeholder="Search..."
             />
             <MagnifyingGlassIcon className="h-6 w-6 text-black" />
@@ -110,7 +110,7 @@ const Header = ({ categories }: any) => {
       </div>
 
       {/* Bottom Nav */}
-      <div className="bg-white hidden text-black lg:flex items-center justify-between p-4 lg:px-20 pb-6 text-sm">
+      <div className="bg-[#f7f7f7] hidden text-black lg:flex items-center justify-between p-4 lg:px-20 pb-6 text-sm">
         {categories.map((category: string, i: number) => (
           <Link href="" key={i} className="text-black capitalize">
             {category}
