@@ -39,7 +39,11 @@ const Footer = ({ categories }: any) => {
           <p className="text-lg font-semibold mb-3">Categories</p>
           <div>
             {categories.slice(0, 5).map((category: string, i: number) => (
-              <Link href="" key={i} className="text-black block capitalize">
+              <Link
+                href={`/category/${category}`}
+                key={i}
+                className="text-black block capitalize"
+              >
                 {category}
               </Link>
             ))}
