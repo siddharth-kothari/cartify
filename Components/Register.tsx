@@ -93,12 +93,12 @@ const Register = () => {
   };
 
   return (
-    <section className="w-screen my-20 grid place-content-center text-center">
+    <section className=" my-20 flex flex-col items-center text-center">
       <h1 className="font-abril text-black text-4xl tracking-wider cursor-pointer">
         Cartify
       </h1>
 
-      <div className="mt-5 border rounded-lg p-5">
+      <div className="w-full md:w-[40%] mt-5 border rounded-lg p-5 md:px-12 md:py-8">
         <h1 className="text-left text-lg font-semibold">Create Account</h1>
 
         <form onSubmit={handleLogin} className="mt-3">
@@ -112,10 +112,10 @@ const Register = () => {
             <input
               type="text"
               id="username"
-              className={`w-full px-3 py-2 border text-black text-left bg-inherit rounded-md focus:ring-black focus:border-black outline-none ${
+              className={`w-full  py-2 border-b text-black text-left bg-inherit !border-black outline-none ${
                 errors.username ? "border-red-500" : "border-gray-300"
               }`}
-              placeholder="Enter your username"
+              placeholder="Name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -133,10 +133,10 @@ const Register = () => {
             <input
               type="tel"
               id="mobile"
-              className={`w-full px-3 py-2 border text-black text-left bg-inherit rounded-md focus:ring-black focus:border-black outline-none ${
+              className={`w-full  py-2 border-b !border-black text-black text-left bg-inherit  outline-none ${
                 errors.mobile ? "border-red-500" : "border-gray-300"
               }`}
-              placeholder="Enter your mobile"
+              placeholder="Mobile"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
             />
@@ -154,10 +154,10 @@ const Register = () => {
             <input
               type="email"
               id="email"
-              className={`w-full px-3 py-2 border text-black text-left bg-inherit rounded-md focus:ring-black focus:border-black outline-none ${
+              className={`w-full  py-2 border-b !border-black text-black text-left bg-inherit  outline-none ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
-              placeholder="Enter your email"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -175,10 +175,10 @@ const Register = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
-              className={`w-full px-3 py-2 border bg-inherit text-black text-left rounded-md focus:ring-black focus:border-black outline-none ${
+              className={`w-full  py-2 border-b !border-black bg-inherit text-black text-left  outline-none ${
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
-              placeholder="Enter your password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -200,7 +200,7 @@ const Register = () => {
           <div className="w-full flex">
             <button
               type="submit"
-              className="w-[40%] mx-auto  py-2 px-4 outline-none button"
+              className="w-full mx-auto  py-2 px-4 outline-none button"
             >
               Register
             </button>
@@ -212,7 +212,7 @@ const Register = () => {
         <p className="text-sm text-gray-400 font-manrope mb-3">
           Already have an account?
         </p>
-        <Link className="button" href="/login">
+        <Link className="button px-10" href="/login">
           Sign in
         </Link>
       </div>

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -72,29 +73,29 @@ const Login = () => {
       {status == "loading" && <Loading />}
 
       {status !== "authenticated" && (
-        <section className="w-screen my-20 grid place-content-center text-center">
+        <section className="w-full my-20 flex flex-col items-center text-center">
           <h1 className="font-abril text-black text-4xl tracking-wider cursor-pointer">
             Cartify
           </h1>
 
-          <div className="mt-5 border rounded-lg p-5">
+          <div className="w-full md:w-[40%] mt-5 border rounded-lg p-5 md:px-12 md:py-8 ">
             <h1 className="text-left text-lg font-semibold">Sign In</h1>
 
             <form onSubmit={handleLogin} className="mt-3">
               <div className="mb-4">
-                <label
+                {/* <label
                   htmlFor="username"
                   className="block text-black text-left text-sm font-medium mb-[3px]"
                 >
                   Username
-                </label>
+                </label> */}
                 <input
                   type="text"
                   id="username"
-                  className={`w-full px-3 py-2 border text-black text-left bg-inherit rounded-md focus:ring-black focus:border-black outline-none ${
+                  className={`w-full py-2 border-b text-black text-left bg-inherit !border-black  outline-none ${
                     errors.username ? "border-red-500" : "border-gray-300"
                   }`}
-                  placeholder="Enter your username"
+                  placeholder="Email"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -103,19 +104,19 @@ const Login = () => {
                 )}
               </div>
               <div className="mb-6 relative">
-                <label
+                {/* <label
                   htmlFor="password"
                   className="block text-black text-left text-sm font-medium mb-[3px]"
                 >
                   Password
-                </label>
+                </label> */}
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  className={`w-full px-3 py-2 border bg-inherit text-black text-left rounded-md focus:ring-black focus:border-black outline-none ${
+                  className={`w-full py-2 border-b bg-inherit text-black text-left !border-black  outline-none ${
                     errors.password ? "border-red-500" : "border-gray-300"
                   }`}
-                  placeholder="Enter your password"
+                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -137,16 +138,17 @@ const Login = () => {
               <div className="w-full flex">
                 <button
                   type="submit"
-                  className="w-[40%] button mx-auto mb-3 py-2 px-4 outline-none"
+                  className="w-full button mx-auto mb-3 py-2 px-4 outline-none"
                 >
                   Sign In
                 </button>
               </div>
             </form>
 
-            <div className="text-center">
+            <div className="mt-5">
+              <p className="text-left mb-3">Or log in with</p>
               <button
-                className=" button"
+                className="w-full button text-center"
                 onClick={() => {
                   signIn("google");
                 }}
@@ -154,14 +156,13 @@ const Login = () => {
                 Sign in with Google
               </button>
             </div>
-          </div>
 
-          <div className="mt-5">
-            <p className="text-sm text-gray-400 font-manrope mb-3">
-              New to Cartify?
-            </p>
-            <Link className="button" href="/register">
-              Create your Cartify account
+            <Link
+              className="font-bold flex gap-x-1 items-center mt-5"
+              href="/register"
+            >
+              Create an account
+              <ArrowRightIcon className="text-black w-4 h-4 font-bold" />
             </Link>
           </div>
         </section>

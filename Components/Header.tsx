@@ -36,7 +36,7 @@ const Header = ({ categories }: any) => {
   return (
     <header className="sticky top-0 z-20">
       {/* Top Nav */}
-      <div className="bg-white flex items-center flex-grow px-20 py-5 gap-5 justify-between">
+      <div className="bg-white flex items-center flex-grow px-5 lg:px-20 py-2 gap-5 justify-between">
         <div className="flex items-center flex-grow sm:flex-grow-0">
           <Link
             href="/"
@@ -110,7 +110,7 @@ const Header = ({ categories }: any) => {
       </div>
 
       {/* Bottom Nav */}
-      <div className="bg-white hidden text-black lg:flex items-center justify-between p-4 px-20 pb-6 text-sm">
+      <div className="bg-white hidden text-black lg:flex items-center justify-between p-4 lg:px-20 pb-6 text-sm">
         {categories.map((category: string, i: number) => (
           <Link href="" key={i} className="text-black capitalize">
             {category}
