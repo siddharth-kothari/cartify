@@ -36,7 +36,7 @@ const Header = ({ categories }: any) => {
   return (
     <header className="sticky top-0 z-20">
       {/* Top Nav */}
-      <div className="bg-[#f7f7f7] flex items-center flex-grow px-5 lg:px-20 py-2 gap-5 justify-between">
+      <div className="bg-[#f7f7f7] flex items-center flex-grow px-5 pt-8 lg:px-20 py-2 gap-5 justify-between">
         <div className="flex items-center flex-grow sm:flex-grow-0">
           <Link
             href="/"
