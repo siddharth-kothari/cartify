@@ -2,21 +2,18 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { cart, search } from "./../assets";
-import Image from "next/image";
 import {
   MagnifyingGlassIcon,
   ShoppingCartIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
-import { selectItems } from "@/slices/cartSlice";
 import { RootState } from "@/utils/store";
 import { useRouter } from "next/navigation";
 
 const Header = ({ categories }: any) => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const name = session?.user?.name?.split(" ");
   const username = name ? name[0] : "";
   const items = useSelector((state: RootState) => state.cart.count);
@@ -113,7 +110,8 @@ const Header = ({ categories }: any) => {
       <div className="bg-[#f7f7f7] hidden text-black lg:flex items-center justify-between p-4 lg:px-20 pb-6 text-sm">
         {categories.map((category: string, i: number) => (
           <Link
-            href={`/category/${category}`}
+            href={`/category/[category]`}
+            as={`/category/${category}`}
             key={i}
             className="text-black capitalize"
           >
