@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const Banner = () => {
   return (
-    <div className="relative">
+    <section className="relative">
       <Carousel
         autoPlay
         infiniteLoop
@@ -49,7 +49,7 @@ const Banner = () => {
           className="md:h-[600px] md:object-fill object-contain object-center"
         />
       </Carousel>
-    </div>
+    </section>
   );
 };
 

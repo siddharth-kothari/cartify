@@ -13,9 +13,5 @@ export default function AuthProvider({
   // Load cart from localStorage
   store.dispatch(loadCartFromLocalStorage());
 
-  return (
-    <SessionProvider>
-      <Provider store={store}>{children}</Provider>
-    </SessionProvider>
-  );
+  return <SessionProvider>{children}</SessionProvider>;
 }
