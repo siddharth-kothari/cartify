@@ -48,7 +48,7 @@ const callbacks = {
   // Add other callbacks as needed
 };
 
-var CryptoJS = require("crypto-js");
+// var CryptoJS = require("crypto-js");
 var key = process.env.NEXT_PUBLIC_SECRET;
 
 export const options: NextAuthOptions = {
@@ -67,15 +67,15 @@ export const options: NextAuthOptions = {
             [credentials?.username]
           );
 
-          var bytes = CryptoJS.AES.decrypt(credentials.password, key);
-          var originalText = bytes.toString(CryptoJS.enc.Utf8);
+          // var bytes = CryptoJS.AES.decrypt(credentials.password, key);
+          // var originalText = bytes.toString(CryptoJS.enc.Utf8);
 
           var user = existingUser[0];
           if (existingUser.length > 0) {
             var user = existingUser[0];
 
             const isPasswordCorrect = await bcrypt.compare(
-              originalText,
+              credentials?.password,
               user.password
             );
 

@@ -26,8 +26,8 @@ const Register = () => {
   const router = useRouter();
   const { status } = useSession();
   const [loading, setLoading] = useState(false);
-  var CryptoJS = require("crypto-js");
-  var key = process.env.NEXT_PUBLIC_SECRET;
+  // var CryptoJS = require("crypto-js");
+  // var key = process.env.NEXT_PUBLIC_SECRET;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -75,12 +75,12 @@ const Register = () => {
       body
     );
 
-    var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+    //var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
 
     if (response.data.status === 201) {
       const loginres = await LoginHelper({
         username: email,
-        password: ciphertext,
+        password,
       });
 
       if (loginres && loginres.ok) {
