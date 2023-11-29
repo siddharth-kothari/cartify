@@ -61,6 +61,8 @@ const Login = () => {
       password,
     });
 
+    console.log("loginres", loginres);
+
     if (loginres && loginres.ok) {
       setUsername("");
       setPassword("");
