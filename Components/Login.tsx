@@ -28,8 +28,8 @@ const Login = () => {
   const { status } = useSession();
   const [resError, setResErrors] = useState("");
   const [loading, setLoading] = useState(false);
-  var CryptoJS = require("crypto-js");
-  var key = process.env.NEXT_PUBLIC_SECRET;
+  // var CryptoJS = require("crypto-js");
+  // var key = process.env.NEXT_PUBLIC_SECRET;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -55,12 +55,12 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-    var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+    // var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
     // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
       username,
-      password: ciphertext,
+      password,
     });
 
     //console.log("loginres", loginres);
