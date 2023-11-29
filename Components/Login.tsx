@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
 import bcrypt from "bcryptjs";
-import Loading from "@/app/loading";
+import Loading from "@/Components/Loading";
 
 interface Errors {
   username?: string;
@@ -28,6 +28,8 @@ const Login = () => {
   const { status } = useSession();
   const [resError, setResErrors] = useState("");
   const [loading, setLoading] = useState(false);
+  var CryptoJS = require("crypto-js");
+  var key = process.env.NEXT_PUBLIC_SECRET;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -53,15 +55,15 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-
-    const hashedPass = await bcrypt.hash(password, 5);
+    var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+    // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
       username,
-      password,
+      password: ciphertext,
     });
 
-    console.log("loginres", loginres);
+    //console.log("loginres", loginres);
 
     if (loginres && loginres.ok) {
       setUsername("");
@@ -73,6 +75,32 @@ const Login = () => {
       setLoading(false);
       setResErrors("Invalid email or pasword");
     }
+    // try {
+    //   const response = await fetch("/api/login", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ username, password }),
+    //   });
+
+    //   if (response.ok) {
+    //     // Successful login
+    //     setUsername("");
+    //     setPassword("");
+    //     setErrors({});
+    //     setLoading(false);
+    //     router.push("/");
+    //   } else {
+    //     // Failed login
+    //     setLoading(false);
+    //     setResErrors("Invalid email or password");
+    //   }
+    // } catch (error) {
+    //   console.error("Login error:", error);
+    //   setLoading(false);
+    //   setResErrors("An error occurred during login");
+    // }
     // Reset the form fields and errors
   };
 

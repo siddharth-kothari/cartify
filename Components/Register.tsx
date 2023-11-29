@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 import { useRouter } from "next/navigation";
 import { LoginHelper } from "@/utils/loginHelper";
 import { useSession } from "next-auth/react";
-import Loading from "@/app/loading";
+import Loading from "@/Components/Loading";
 
 interface Errors {
   username?: string;
@@ -26,6 +26,8 @@ const Register = () => {
   const router = useRouter();
   const { status } = useSession();
   const [loading, setLoading] = useState(false);
+  var CryptoJS = require("crypto-js");
+  var key = process.env.NEXT_PUBLIC_SECRET;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -73,10 +75,12 @@ const Register = () => {
       body
     );
 
+    var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+
     if (response.data.status === 201) {
       const loginres = await LoginHelper({
         username: email,
-        password,
+        password: ciphertext,
       });
 
       if (loginres && loginres.ok) {

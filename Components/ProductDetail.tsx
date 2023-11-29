@@ -3,25 +3,28 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { star } from "./../assets";
-import { addToCart } from "@/slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { addToCart, selectItems } from "@/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Sugesstions from "./Sugesstions";
 
 const ProductDetail = ({ product }: any) => {
+  const items = useSelector(selectItems);
+
+  const quantity = items.find((item: any) => item.id === product.id);
+
+  const qty = quantity ? quantity.qty : 0;
+
   const [rating] = useState(Math.round(product.rating));
   const [isDescOpen, setIsDescOpen] = useState(true);
   const [reviews, setReviews] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
+  const [cartCount, setCartCount] = useState(qty);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setReviews(Math.floor(Math.random() * 10001));
   }, []);
-
-  const id = product.id;
 
   const handleIncreaseQuantity = () => {
     setCartCount(cartCount + 1);
@@ -58,10 +61,10 @@ const ProductDetail = ({ product }: any) => {
   return (
     <section className=" px-20 py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 ">
-        <div className="tex-center">
+        <div className="text-center">
           <Image
+            alt={product.title}
             src={product.thumbnail}
-            alt={product.name}
             width={400}
             height={400}
             className="mx-auto object-contain"

@@ -15,7 +15,7 @@ const Checkout = () => {
   const handleCartCheckout = () => {};
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status !== "authenticated") {
       router.replace("/");
     }
   }, [status, router]);

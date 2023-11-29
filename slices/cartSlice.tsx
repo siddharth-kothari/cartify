@@ -36,10 +36,10 @@ export const cartSlice = createSlice({
         if (action.payload.qty > 1) {
           existingItem.qty += action.payload.qty;
         } else {
-          existingItem.qty += 1;
+          existingItem.qty += action.payload.qty;
         }
       } else {
-        state.items.push({ ...action.payload, qty: 1 });
+        state.items.push({ ...action.payload, qty: action.payload.qty });
       }
 
       state.count = state.items.length;

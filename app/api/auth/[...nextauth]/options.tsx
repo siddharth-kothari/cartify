@@ -8,8 +8,8 @@ import { User, Account } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
 
 type SignInCallbackParams = {
-  user: User | AdapterUser;
-  account: Account | null;
+  user: User;
+  account: Account;
 };
 
 const signInCallback: (
@@ -48,6 +48,9 @@ const callbacks = {
   // Add other callbacks as needed
 };
 
+var CryptoJS = require("crypto-js");
+var key = process.env.NEXT_PUBLIC_SECRET;
+
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -64,14 +67,19 @@ export const options: NextAuthOptions = {
             [credentials?.username]
           );
 
+          var bytes = CryptoJS.AES.decrypt(credentials.password, key);
+          var originalText = bytes.toString(CryptoJS.enc.Utf8);
+
           var user = existingUser[0];
           if (existingUser.length > 0) {
             var user = existingUser[0];
 
             const isPasswordCorrect = await bcrypt.compare(
-              credentials?.password,
+              originalText,
               user.password
             );
+
+            console.log("isPasswordCorrect", isPasswordCorrect);
 
             if (isPasswordCorrect) {
               return user;
