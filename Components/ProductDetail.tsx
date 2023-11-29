@@ -32,7 +32,8 @@ const ProductDetail = ({ product }: any) => {
   };
   const handleDecreaseQuantity = () => {
     //dispatch(decreaseQTY(id));
-    setCartCount(cartCount - 1);
+    const count = cartCount > 0 ? cartCount - 1 : 0;
+    setCartCount(count);
   };
   const addItemToCart = () => {
     if (cartCount > 0) {
