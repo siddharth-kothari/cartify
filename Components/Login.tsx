@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -22,6 +26,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { status } = useSession();
+  const [resError, setResErrors] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -49,17 +55,23 @@ const Login = () => {
     // Process the form submission logic here
 
     const hashedPass = await bcrypt.hash(password, 5);
-
+    setLoading(true);
     const loginres = await LoginHelper({
       username,
       password,
     });
 
+    console.log("loginres", loginres);
+
     if (loginres && loginres.ok) {
       setUsername("");
       setPassword("");
       setErrors({});
+      setLoading(false);
       router.push("/");
+    } else {
+      setLoading(false);
+      setResErrors("Invalid email or pasword");
     }
     // Reset the form fields and errors
   };
@@ -68,105 +80,111 @@ const Login = () => {
     setShowPassword((prevShowPassword: any) => !prevShowPassword);
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       {status == "loading" && <Loading />}
 
-      {status !== "authenticated" && (
-        <section className="w-full my-20 flex flex-col items-center text-center">
-          <h1 className="font-abril text-black text-4xl tracking-wider cursor-pointer">
-            Cartify
-          </h1>
+      <section className="w-full my-20 flex flex-col items-center text-center">
+        <h1 className="font-abril text-black text-4xl tracking-wider cursor-pointer">
+          Cartify
+        </h1>
 
-          <div className="w-full md:w-[40%] mt-5 border rounded-lg p-5 md:px-12 md:py-8 shadow-xl">
-            <h1 className="text-left text-lg font-semibold">Sign In</h1>
+        <div className="w-full md:w-[40%] mt-5 border rounded-lg p-5 md:px-12 md:py-8 shadow-xl">
+          <h1 className="text-left text-lg font-semibold">Sign In</h1>
 
-            <form onSubmit={handleLogin} className="mt-3">
-              <div className="mb-4">
-                {/* <label
+          <form onSubmit={handleLogin} className="mt-3">
+            <div className="mb-4">
+              {/* <label
                   htmlFor="username"
                   className="block text-black text-left text-sm font-medium mb-[3px]"
                 >
                   Username
                 </label> */}
-                <input
-                  type="text"
-                  id="username"
-                  className={`w-full py-2 border-b text-black text-left bg-inherit !border-black  outline-none ${
-                    errors.username ? "border-red-500" : "border-gray-300"
-                  }`}
-                  placeholder="Email"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                {errors.username && (
-                  <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-                )}
-              </div>
-              <div className="mb-6 relative">
-                {/* <label
+              <input
+                type="text"
+                id="username"
+                className={`w-full py-2 border-b text-black text-left bg-inherit !border-black  outline-none ${
+                  errors.username ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              {errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+              )}
+            </div>
+            <div className="mb-3 relative">
+              {/* <label
                   htmlFor="password"
                   className="block text-black text-left text-sm font-medium mb-[3px]"
                 >
                   Password
                 </label> */}
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  className={`w-full py-2 border-b bg-inherit text-black text-left !border-black  outline-none ${
-                    errors.password ? "border-red-500" : "border-gray-300"
-                  }`}
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-[70%] transform -translate-y-1/2 text-gray-500"
-                  onClick={toggleShowPassword}
-                >
-                  {!showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5" />
-                  ) : (
-                    <EyeIcon className="h-5 w-5" />
-                  )}
-                </button>
-                {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-                )}
-              </div>
-              <div className="w-full flex">
-                <button
-                  type="submit"
-                  className="w-full button mx-auto mb-3 py-2 px-4 outline-none"
-                >
-                  Sign In
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-5">
-              <p className="text-left mb-3">Or log in with</p>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className={`w-full py-2 border-b bg-inherit text-black text-left !border-black  outline-none ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <button
-                className="w-full button text-center"
-                onClick={() => {
-                  signIn("google");
-                }}
+                type="button"
+                className="absolute right-3 top-[70%] transform -translate-y-1/2 text-gray-500"
+                onClick={toggleShowPassword}
               >
-                Sign in with Google
+                {!showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5" />
+                ) : (
+                  <EyeIcon className="h-5 w-5" />
+                )}
               </button>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
             </div>
 
-            <Link
-              className="font-bold flex gap-x-1 items-center mt-5"
-              href="/register"
+            {resError && (
+              <p className="text-red-700 text-left mb-6">{resError}</p>
+            )}
+            <div className="w-full flex">
+              <button
+                type="submit"
+                className="w-full button mx-auto mb-3 py-2 px-4 outline-none"
+              >
+                Sign In
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-5">
+            <p className="text-left mb-3">Or log in with</p>
+            <button
+              className="w-full button text-center"
+              onClick={() => {
+                signIn("google");
+              }}
             >
-              Create an account
-              <ArrowRightIcon className="text-black w-4 h-4 font-bold" />
-            </Link>
+              Sign in with Google
+            </button>
           </div>
-        </section>
-      )}
+
+          <Link
+            className="font-bold flex gap-x-1 items-center mt-5"
+            href="/register"
+          >
+            Create an account
+            <ArrowRightIcon className="text-black w-4 h-4 font-bold" />
+          </Link>
+        </div>
+      </section>
     </>
   );
 };

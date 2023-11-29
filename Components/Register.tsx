@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import { useRouter } from "next/navigation";
 import { LoginHelper } from "@/utils/loginHelper";
 import { useSession } from "next-auth/react";
+import Loading from "@/app/loading";
 
 interface Errors {
   username?: string;
@@ -24,6 +25,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { status } = useSession();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -54,7 +56,7 @@ const Register = () => {
       setErrors(validationErrors);
       return;
     }
-
+    setLoading(true);
     const hashedPass = await bcrypt.hash(password, 5);
 
     const userData = {
@@ -81,6 +83,7 @@ const Register = () => {
         setUsername("");
         setPassword("");
         setErrors({});
+        setLoading(false);
         router.push("/");
       }
     }
@@ -88,6 +91,9 @@ const Register = () => {
     // Reset the form fields and errors
   };
 
+  if (loading) {
+    return <Loading />;
+  }
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword: any) => !prevShowPassword);
   };

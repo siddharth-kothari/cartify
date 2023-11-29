@@ -78,6 +78,8 @@ export const options: NextAuthOptions = {
             } else {
               return null;
             }
+          } else {
+            return null;
           }
         } catch (error: any) {
           throw new Error(error);
