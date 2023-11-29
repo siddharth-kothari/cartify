@@ -3,12 +3,18 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { star } from "./../assets";
-import { addToCart } from "@/slices/cartSlice";
-import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  decreaseQTY,
+  increaseQTY,
+  selectItems,
+} from "@/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Suggestions from "./Suggestions";
+import { api } from "@/app/api";
+import Link from "next/link";
 
-const ProductDetail = ({ product }: any) => {
+const ProductDetail = async ({ product }: any) => {
   const [rating] = useState(Math.round(product.rating));
   const [isDescOpen, setIsDescOpen] = useState(true);
   const [reviews, setReviews] = useState(0);
@@ -24,16 +30,16 @@ const ProductDetail = ({ product }: any) => {
     setReviews(Math.floor(Math.random() * 10001));
   }, []);
 
+  const id = product.id;
+
   const handleIncreaseQuantity = () => {
     setCartCount(cartCount + 1);
     //dispatch(increaseQTY(id));
   };
-
   const handleDecreaseQuantity = () => {
     //dispatch(decreaseQTY(id));
     setCartCount(cartCount - 1);
   };
-
   const addItemToCart = () => {
     if (cartCount > 0) {
       const details = {
@@ -58,6 +64,13 @@ const ProductDetail = ({ product }: any) => {
     setIsDetailOpen(true);
   };
 
+  const { data } = await api.get(
+    `${process.env.NEXT_PUBLIC_STORE_BASE_URL}products/category/${product.category}`
+  );
+
+  const suggestions = data.products.filter(
+    (item: any) => item.id !== product.id
+  );
   return (
     <section className=" px-20 py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 ">
@@ -155,7 +168,25 @@ const ProductDetail = ({ product }: any) => {
       </div>
 
       <p className=" capitalize text-3xl font-light mt-20">you may also like</p>
-      <Suggestions category={product.category} id={product.id} />
+      <div className="flex justify-around mt-10">
+        {suggestions.map((item: any, i: number) => (
+          <div className="flex flex-col justify-between" key={i}>
+            <Image
+              src={item.thumbnail}
+              alt={item.title}
+              className="object-contain"
+              width={200}
+              height={200}
+            />
+            <div>
+              <Link href={`/product/${item.id}`} className=" capitalize">
+                {item.title}
+              </Link>
+              <p>₹ {item.price * 80}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };

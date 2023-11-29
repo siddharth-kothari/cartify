@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
 import bcrypt from "bcryptjs";
-import Loading from "@/Components/Loading";
+import Loading from "@/app/loading";
 
 interface Errors {
   username?: string;

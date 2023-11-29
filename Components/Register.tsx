@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 import { useRouter } from "next/navigation";
 import { LoginHelper } from "@/utils/loginHelper";
 import { useSession } from "next-auth/react";
-import Loading from "@/Components/Loading";
+import Loading from "@/app/loading";
 
 interface Errors {
   username?: string;
