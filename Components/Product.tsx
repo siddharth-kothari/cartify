@@ -25,13 +25,15 @@ const Product = ({ product }: any) => {
   };
 
   return (
-    <div className="relative flex flex-col my-5 bg-white z-10 p-8 shadow-lg">
+    <div
+      className="relative flex flex-col my-5 bg-white z-10 p-8 shadow-lg"
+      key={product.id}
+    >
       <Image
         src={product.thumbnail}
         width={200}
         height={200}
         className="h-[200px] mx-auto object-contain"
-        objectFit="contain"
         alt={product.title}
       />
       <Link href={`/product/${product.id}`} className="my-3">
@@ -41,7 +43,12 @@ const Product = ({ product }: any) => {
         {Array(rating)
           .fill(0)
           .map((_, i) => (
-            <Image src={star} alt="star" className="h-5 w-5 text-yellow-500" />
+            <Image
+              src={star}
+              alt="star"
+              className="h-5 w-5 text-yellow-500"
+              key={i}
+            />
           ))}
       </div>
       <p className="text-xs my-2 line-clamp-2">{product.description}</p>

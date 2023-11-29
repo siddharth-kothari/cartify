@@ -80,7 +80,7 @@ const ProductDetail = async ({ product }: any) => {
             alt={product.name}
             width={400}
             height={400}
-            className="mx-auto"
+            className="mx-auto object-contain"
           />
         </div>
         <div className="flex flex-col space-y-5">
@@ -99,6 +99,7 @@ const ProductDetail = async ({ product }: any) => {
                     src={star}
                     alt="star"
                     className="h-3 w-3 text-yellow-500"
+                    key={i}
                   />
                 ))}
             </div>
@@ -169,7 +170,7 @@ const ProductDetail = async ({ product }: any) => {
       <p className=" capitalize text-3xl font-light mt-20">you may also like</p>
       <div className="flex justify-around mt-10">
         {suggestions.map((item: any, i: number) => (
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col justify-between" key={i}>
             <Image
               src={item.thumbnail}
               alt={item.title}

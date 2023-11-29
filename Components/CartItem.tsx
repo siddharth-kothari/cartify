@@ -25,7 +25,7 @@ const CartItem = ({ item }: any) => {
         alt={item.name}
         width={200}
         height={200}
-        objectFit="contain"
+        className=" object-contain"
       />
 
       <div className="col-span-3 mx-5 grid gap-y-5 place-content-start">
