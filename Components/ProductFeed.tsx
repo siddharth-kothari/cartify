@@ -11,7 +11,7 @@ const ProductFeed = ({ products }: any) => {
       <img
         className="md:col-span-full"
         src="https://links.papareact.com/dyz"
-        alt=""
+        alt="ad-banner"
       />
 
       <div className="md:col-span-2">

@@ -29,7 +29,6 @@ const Banner = () => {
           alt="gadgets"
           loading="lazy"
           quality={50}
-          objectFit="contain"
           className="md:h-[600px] md:object-fill object-contain object-center"
         />
         <Image
@@ -37,7 +36,6 @@ const Banner = () => {
           alt="furniture"
           loading="lazy"
           quality={50}
-          objectFit="contain"
           className="md:h-[600px] md:object-fill object-contain object-center"
         />
         <Image
@@ -45,7 +43,6 @@ const Banner = () => {
           alt="groceries"
           loading="lazy"
           quality={50}
-          objectFit="contain"
           className="md:h-[600px] md:object-fill object-contain object-center"
         />
       </Carousel>

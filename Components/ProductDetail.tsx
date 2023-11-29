@@ -3,19 +3,12 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { star } from "./../assets";
-import {
-  addToCart,
-  decreaseQTY,
-  increaseQTY,
-  selectItems,
-} from "@/slices/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "@/slices/cartSlice";
+import { useDispatch } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { api } from "@/app/api";
-import Link from "next/link";
 import Sugesstions from "./Sugesstions";
 
-const ProductDetail = async ({ product }: any) => {
+const ProductDetail = ({ product }: any) => {
   const [rating] = useState(Math.round(product.rating));
   const [isDescOpen, setIsDescOpen] = useState(true);
   const [reviews, setReviews] = useState(0);
@@ -23,10 +16,6 @@ const ProductDetail = async ({ product }: any) => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [suggestions, setSuggestions] = useState(null);
   const dispatch = useDispatch();
-
-  // const items = useSelector(selectItems);
-  //const qty = items.find((item: any) => item.id === product.id);
-  //console.log(qty);
 
   useEffect(() => {
     setReviews(Math.floor(Math.random() * 10001));

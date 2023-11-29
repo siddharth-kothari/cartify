@@ -36,7 +36,11 @@ const Product = ({ product }: any) => {
         className="h-[200px] mx-auto object-contain"
         alt={product.title}
       />
-      <Link href={`/product/${product.id}`} className="my-3">
+      <Link
+        href={`/product/[product.id]`}
+        as={`/product/${product.id}`}
+        className="my-3"
+      >
         {product.title}
       </Link>
       <div className="flex space-x-1">

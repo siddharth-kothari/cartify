@@ -1,14 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectItems, selectTotal } from "@/slices/cartSlice";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Checkout = () => {
   const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
+  const router = useRouter();
+  const { status } = useSession();
 
   const handleCartCheckout = () => {};
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
 
   return (
     <section>
