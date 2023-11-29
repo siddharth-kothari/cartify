@@ -13,6 +13,7 @@ import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
 import bcrypt from "bcryptjs";
 import Loading from "@/Components/Loading";
+import { AES } from "crypto-js";
 
 interface Errors {
   username?: string;
@@ -28,8 +29,7 @@ const Login = () => {
   const { status } = useSession();
   const [resError, setResErrors] = useState("");
   const [loading, setLoading] = useState(false);
-  // var CryptoJS = require("crypto-js");
-  // var key = process.env.NEXT_PUBLIC_SECRET;
+  var key = process.env.NEXT_PUBLIC_SECRET as string;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -55,12 +55,12 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-    // var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+    var ciphertext = AES.encrypt(password, key).toString();
     // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
       username,
-      password,
+      password: ciphertext,
     });
 
     //console.log("loginres", loginres);
