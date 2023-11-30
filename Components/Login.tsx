@@ -116,7 +116,7 @@ const Login = () => {
     <>
       {status == "loading" && <Loading />}
 
-      <section className="w-full my-20 flex flex-col items-center text-center">
+      <section className="w-full my-20 flex flex-col items-center text-center px-5">
         <h1 className="font-abril text-black text-4xl tracking-wider cursor-pointer">
           Cartify
         </h1>

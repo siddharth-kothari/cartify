@@ -3,8 +3,8 @@ import React from "react";
 
 const Footer = ({ categories }: any) => {
   return (
-    <footer className="bg-[#ededed] py-8 px-10">
-      <div className="grid grid-flow-row-dense space-y-5 space-x-3 z-0 md:grid-cols-2 lg:grid-cols-4 mx-auto">
+    <footer className="bg-[#ededed] px-5 py-8 lg:px-10">
+      <div className="grid grid-flow-row-dense space-y-5 space-x-3 z-0 grid-cols-2 lg:grid-cols-4 mx-auto">
         <div className="">
           <Link
             href="/"

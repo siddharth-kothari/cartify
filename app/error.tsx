@@ -15,9 +15,12 @@ export default function Error({
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
+    <div className="flex flex-col items-center justify-center h-[75vh] gap-y-5 px-5">
+      <h2 className="font-bold text-3xl md:text-5xl text-center">
+        Something went wrong!
+      </h2>
       <button
+        className="button"
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
