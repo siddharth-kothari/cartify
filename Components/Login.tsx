@@ -11,9 +11,8 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
-import bcrypt from "bcryptjs";
 import Loading from "@/Components/Loading";
-import { AES } from "crypto-js";
+import CryptoJS from "crypto-js";
 
 interface Errors {
   username?: string;
@@ -55,12 +54,12 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-    //var ciphertext = AES.encrypt(password, key).toString();
+    var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
     // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
       username,
-      password,
+      password: ciphertext,
     });
 
     //console.log("loginres", loginres);

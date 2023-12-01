@@ -1,11 +1,11 @@
-import type { NextAuthOptions, Profile } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { pool } from "@/utils/dbConfig";
-import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { User, Account } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
+import jwt from "jsonwebtoken";
+import CryptoJS from "crypto-js";
 
 type SignInCallbackParams = {
   user: User;
@@ -44,7 +44,22 @@ const signInCallback: (
 
 const callbacks = {
   signIn: signInCallback,
+  async session({ session }: any) {
+    const [existingUser]: any = await pool.execute(
+      "SELECT * FROM users WHERE email = ?",
+      [session.user.email]
+    );
+    const data = existingUser[0];
+    const acessToken = jwt.sign(
+      { id: data.id, email: data.email, name: data.name },
+      process.env.NEXTAUTH_SECRET || "yourFallbackSecret",
+      { expiresIn: "30d" }
+    );
 
+    session.user.accesToken = acessToken;
+
+    return session;
+  },
   // Add other callbacks as needed
 };
 
@@ -67,15 +82,15 @@ export const options: NextAuthOptions = {
             [credentials?.username]
           );
 
-          // var bytes = CryptoJS.AES.decrypt(credentials.password, key);
-          // var originalText = bytes.toString(CryptoJS.enc.Utf8);
+          var bytes = CryptoJS.AES.decrypt(credentials.password, key as string);
+          var originalText = bytes.toString(CryptoJS.enc.Utf8);
 
           var user = existingUser[0];
           if (existingUser.length > 0) {
             var user = existingUser[0];
 
             const isPasswordCorrect = await bcrypt.compare(
-              credentials?.password,
+              originalText,
               user.password
             );
 
