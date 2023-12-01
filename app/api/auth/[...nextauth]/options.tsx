@@ -82,15 +82,15 @@ export const options: NextAuthOptions = {
             [credentials?.username]
           );
 
-          var bytes = CryptoJS.AES.decrypt(credentials.password, key as string);
-          var originalText = bytes.toString(CryptoJS.enc.Utf8);
+          // var bytes = CryptoJS.AES.decrypt(credentials.password, key);
+          // var originalText = bytes.toString(CryptoJS.enc.Utf8);
 
           var user = existingUser[0];
           if (existingUser.length > 0) {
             var user = existingUser[0];
 
             const isPasswordCorrect = await bcrypt.compare(
-              originalText,
+              credentials?.password,
               user.password
             );
 
