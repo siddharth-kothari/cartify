@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { selectItems, selectTotal } from "@/slices/cartSlice";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { api } from "@/app/api";
+import { load } from "@cashfreepayments/cashfree-js";
 
 const Checkout = () => {
   const items = useSelector(selectItems);
@@ -12,7 +14,36 @@ const Checkout = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const handleCartCheckout = () => {};
+  const handleCartCheckout = async () => {
+    const data = JSON.stringify({
+      total,
+      items,
+    });
+
+    const headers = {
+      "Content-Type": "application/json", // Adjust the content type based on your API's requirements
+      Authorization: "Bearer " + session?.user.accesToken,
+    };
+
+    const res = await api.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/checkout`,
+      data,
+      { headers }
+    );
+
+    console.log("sessID", res.data.data);
+
+    const cashfree = await load({
+      mode: "sandbox",
+    });
+
+    let checkoutOptions = {
+      paymentSessionId: res.data.data,
+      redirectTarget: "_self", //optional (_self or _blank)
+    };
+
+    cashfree.checkout(checkoutOptions);
+  };
 
   useEffect(() => {
     if (status !== "authenticated") {
