@@ -55,7 +55,9 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-    var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
+    if (typeof window !== "undefined") {
+      var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
+    }
     // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
