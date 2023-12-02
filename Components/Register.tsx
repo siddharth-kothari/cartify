@@ -76,11 +76,11 @@ const Register = () => {
     );
 
     //var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
-
+    const encodedString = Buffer.from(password).toString("base64");
     if (response.data.status === 201) {
       const loginres = await LoginHelper({
         username: email,
-        password,
+        password: encodedString,
       });
 
       if (loginres && loginres.ok) {
