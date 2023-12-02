@@ -58,12 +58,12 @@ const Login = () => {
     // if (typeof window !== 'undefined') {
     // var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
     // }
-    const hashedPassword = CryptoJS.SHA256(password).toString();
+    const encodedString = Buffer.from(password).toString("base64");
     // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
       username,
-      password: hashedPassword,
+      password: encodedString,
     });
 
     //console.log("loginres", loginres);
