@@ -54,31 +54,30 @@ const Login = () => {
       return;
     }
 
-    setLoading(true);
     // Process the form submission logic here
-    if (typeof window !== "undefined") {
-      var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
-
-      const loginres = await LoginHelper({
-        username,
-        password: ciphertext,
-      });
-
-      if (loginres && loginres.ok) {
-        setUsername("");
-        setPassword("");
-        setErrors({});
-        setLoading(false);
-        router.push("/");
-      } else {
-        setLoading(false);
-        setResErrors("Invalid email or pasword");
-      }
-    }
+    // if (typeof window !== 'undefined') {
+    // var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
+    // }
+    const hashedPassword = CryptoJS.SHA256(password).toString();
     // const hashedPass = await bcrypt.hash(password, 5);
+    setLoading(true);
+    const loginres = await LoginHelper({
+      username,
+      password: hashedPassword,
+    });
 
     //console.log("loginres", loginres);
 
+    if (loginres && loginres.ok) {
+      setUsername("");
+      setPassword("");
+      setErrors({});
+      setLoading(false);
+      router.push("/");
+    } else {
+      setLoading(false);
+      setResErrors("Invalid email or pasword");
+    }
     // try {
     //   const response = await fetch("/api/login", {
     //     method: "POST",
