@@ -56,8 +56,11 @@ const Login = () => {
 
     // Process the form submission logic here
     // if (typeof window !== 'undefined') {
-    // var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
+    var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
     // }
+
+    console.log(ciphertext);
+
     const encodedString = Buffer.from(password).toString("base64");
     // const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);

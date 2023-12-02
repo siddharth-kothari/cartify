@@ -10,7 +10,7 @@ const Checkout = () => {
   const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
   const router = useRouter();
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   const handleCartCheckout = () => {};
 
