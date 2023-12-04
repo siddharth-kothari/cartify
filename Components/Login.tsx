@@ -56,7 +56,10 @@ const Login = () => {
 
     // Process the form submission logic here
     if (typeof window !== "undefined") {
-      var ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(password),
+        key
+      ).toString();
       console.log("Ciphertext:", ciphertext);
     }
     //console.log(ciphertext);
