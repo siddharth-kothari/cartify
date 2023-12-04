@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
 import Loading from "@/Components/Loading";
-//import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 
 interface Errors {
   username?: string;
@@ -28,7 +28,7 @@ const Login = () => {
   const { status } = useSession();
   const [resError, setResErrors] = useState("");
   const [loading, setLoading] = useState(false);
-  //var key = process.env.NEXT_PUBLIC_SECRET as string;
+  var key = process.env.NEXT_PUBLIC_SECRET as string;
   //const CryptoJS = import("crypto-js");
 
   useEffect(() => {
@@ -56,8 +56,9 @@ const Login = () => {
 
     // Process the form submission logic here
     // if (typeof window !== 'undefined') {
-    //var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
+    var ciphertext = await CryptoJS.AES.encrypt(password, key).toString();
     // }
+    console.log(ciphertext);
 
     const encodedString = Buffer.from(password).toString("base64");
     // const hashedPass = await bcrypt.hash(password, 5);
