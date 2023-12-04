@@ -6,7 +6,8 @@ import { Cashfree } from "cashfree-pg";
 export async function POST(req: Request) {
   if (req.method === "POST") {
     const { items, total } = await req.json();
-    const orderno = "C-" + Math.floor(Date.now() / 1000);
+    const orderno = "C-12345678";
+    //Math.floor(Date.now() / 1000);
     const session = await getServerSession();
 
     try {
