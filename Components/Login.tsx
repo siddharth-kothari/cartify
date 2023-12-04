@@ -39,6 +39,11 @@ const Login = () => {
     }
   }, [status, router]);
 
+  const encryptPassword = (password: string, key: string) => {
+    const ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+    return ciphertext;
+  };
+
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -63,13 +68,15 @@ const Login = () => {
     //   key
     // ).toString();
 
-    const secret_key = sjcl.codec.utf8String.toBits(key);
-    const salt = sjcl.codec.utf8String.toBits("your_static_salt");
-    const encrypted = sjcl.encrypt(secret_key, password, {
-      iv: salt,
-      salt: salt,
-    });
-    console.log("Ciphertext:", encrypted);
+    // const secret_key = sjcl.codec.utf8String.toBits(key);
+    // const salt = sjcl.codec.utf8String.toBits("your_static_salt");
+    // const encrypted = sjcl.encrypt(secret_key, password, {
+    //   iv: salt,
+    //   salt: salt,
+    // });
+
+    const encryptedPassword = encryptPassword(password, key);
+    console.log("Ciphertext:", encryptedPassword);
 
     //console.log(ciphertext);
 
