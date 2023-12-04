@@ -8,8 +8,7 @@ import { addToCart } from "../slices/cartSlice";
 import Link from "next/link";
 
 const Product = ({ product }: any) => {
-  const [rating] = useState(0);
-  //Math.round(product.rating)
+  const [rating] = useState(Math.round(product.rating));
   const dispatch = useDispatch();
 
   const addItemToCart = () => {

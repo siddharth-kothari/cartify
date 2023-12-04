@@ -15,8 +15,7 @@ const ProductDetail = ({ product }: any) => {
 
   const qty = quantity ? quantity.qty : 0;
 
-  const [rating] = useState(0);
-  // Math.round(product.rating);
+  const [rating] = useState(Math.round(product.rating));
   const [isDescOpen, setIsDescOpen] = useState(true);
   const [reviews, setReviews] = useState(0);
   const [cartCount, setCartCount] = useState(qty);
@@ -24,8 +23,7 @@ const ProductDetail = ({ product }: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setReviews(123);
-    // Math.floor(Math.random() * 10001);
+    setReviews(Math.floor(Math.random() * 10001));
   }, []);
 
   const handleIncreaseQuantity = () => {
