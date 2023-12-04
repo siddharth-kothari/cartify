@@ -45,6 +45,7 @@ export async function POST(req: Request) {
         };
         console.log("5");
         const response = await Cashfree.PGCreateOrder("2022-09-01", request);
+        console.log("response", response);
         const paymentSessionId = response.data.payment_session_id;
         return NextResponse.json(
           { message: "User created !!", status: 201, data: paymentSessionId },
