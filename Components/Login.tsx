@@ -39,11 +39,6 @@ const Login = () => {
     }
   }, [status, router]);
 
-  const encryptPassword = (password: string, key: string) => {
-    const ciphertext = CryptoJS.AES.encrypt(password, key).toString();
-    return ciphertext;
-  };
-
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -61,27 +56,7 @@ const Login = () => {
       return;
     }
 
-    // Process the form submission logic here
-    // if (typeof window !== "undefined") {
-    // var ciphertext = CryptoJS.AES.encrypt(
-    //   JSON.stringify(password),
-    //   key
-    // ).toString();
-
-    // const secret_key = sjcl.codec.utf8String.toBits(key);
-    // const salt = sjcl.codec.utf8String.toBits("your_static_salt");
-    // const encrypted = sjcl.encrypt(secret_key, password, {
-    //   iv: salt,
-    //   salt: salt,
-    // });
-
-    const encryptedPassword = encryptPassword(password, key);
-    console.log("Ciphertext:", encryptedPassword);
-
-    //console.log(ciphertext);
-
     const encodedString = Buffer.from(password).toString("base64");
-    //const hashedPass = await bcrypt.hash(password, 5);
     setLoading(true);
     const loginres = await LoginHelper({
       username,

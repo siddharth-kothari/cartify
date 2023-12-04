@@ -82,9 +82,6 @@ export const options: NextAuthOptions = {
             [credentials?.username]
           );
 
-          // var bytes = CryptoJS.AES.decrypt(credentials.password, key);
-          // var originalText = bytes.toString(CryptoJS.enc.Utf8);
-
           const decodedString = Buffer.from(
             credentials?.password,
             "base64"
