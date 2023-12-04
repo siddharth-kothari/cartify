@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
 import Loading from "@/Components/Loading";
-import * as CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 
 interface Errors {
   username?: string;
@@ -55,13 +55,13 @@ const Login = () => {
     }
 
     // Process the form submission logic here
-    if (typeof window !== "undefined") {
-      var ciphertext = CryptoJS.AES.encrypt(
-        JSON.stringify(password),
-        key
-      ).toString();
-      console.log("Ciphertext:", ciphertext);
-    }
+    // if (typeof window !== "undefined") {
+    var ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(password),
+      key
+    ).toString();
+    console.log("Ciphertext:", ciphertext);
+
     //console.log(ciphertext);
 
     const encodedString = Buffer.from(password).toString("base64");
