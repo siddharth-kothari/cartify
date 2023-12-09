@@ -22,12 +22,14 @@ export async function POST(req: Request) {
 
       for (const item of items) {
         const [newOrderDetail]: any = await pool.execute(
-          "INSERT INTO order_items(orderid,userid,item_id,item_name,amount,qty) VALUES (?,?,?,?,?,?)",
+          "INSERT INTO order_items(orderid,userid,item_id,item_name,description,image,amount,qty) VALUES (?,?,?,?,?,?,?,?)",
           [
             newOrder.insertId,
             getUser[0].id,
             item.id,
             item.name,
+            item.desc,
+            item.image,
             item.price * 80,
             item.qty,
           ]

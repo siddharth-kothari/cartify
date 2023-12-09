@@ -43,6 +43,7 @@ const ProductDetail = ({ product }: any) => {
         image: product.thumbnail,
         name: product.title,
         price: product.price,
+        desc: product.description,
         qty: cartCount,
       };
 
