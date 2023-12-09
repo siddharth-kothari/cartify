@@ -1,7 +1,8 @@
 import React from "react";
 
-const AddressesPage = () => {
-  return <div>AddressesPage</div>;
+const AddressesPage = ({ params }: any) => {
+  const { slug } = params;
+  return <div>{slug}</div>;
 };
 
 export default AddressesPage;
