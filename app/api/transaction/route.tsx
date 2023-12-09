@@ -7,7 +7,7 @@ export async function POST(req: Request) {
       // Parse the JSON data from the request body
       console.log("Processing complete");
       const data = await req.json();
-      console.log("Received data:", data);
+      console.log("Received data:", data.order.order_id);
 
       // Perform any processing or database operations with the data
 
