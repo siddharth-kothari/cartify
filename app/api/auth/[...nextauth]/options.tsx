@@ -36,7 +36,7 @@ const signInCallback: (
       }
       return true;
     } catch (error) {
-      console.log("Error saving user: ", error);
+      //console.log("Error saving user: ", error);
       return false;
     }
   }
@@ -96,7 +96,7 @@ export const options: NextAuthOptions = {
               user.password
             );
 
-            console.log("isPasswordCorrect", isPasswordCorrect);
+            ////console.log("isPasswordCorrect", isPasswordCorrect);
 
             if (isPasswordCorrect) {
               return user;

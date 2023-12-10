@@ -31,7 +31,7 @@ const Checkout = () => {
       { headers }
     );
 
-    console.log("sessID", res.data.data);
+    //console.log("sessID", res.data.data);
 
     const cashfree = await load({
       mode: "sandbox",

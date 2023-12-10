@@ -10,7 +10,7 @@ export async function POST(req: any, res: any) {
         password,
       });
 
-      // console.log("loginres", loginres, username, password);
+      // //console.log("loginres", loginres, username, password);
 
       if (loginres && loginres.ok) {
         // Successful login
@@ -26,7 +26,7 @@ export async function POST(req: any, res: any) {
         );
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return NextResponse.json(
         {
           message: "Something went wrong",

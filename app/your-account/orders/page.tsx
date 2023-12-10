@@ -1,7 +1,7 @@
 import Orders from "@/Components/Orders";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { getOrders } from "@/utils/OrderItems";
+import { getOrders } from "@/utils/functions";
 
 const OrdersPage = async () => {
   const session = await getServerSession();
