@@ -4,13 +4,20 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import SingleAddress from "./SingleAddress";
 import { useSession } from "next-auth/react";
+import Loading from "./Loading";
 
 const Address = ({ addresses }: any) => {
   const { status } = useSession();
   const router = useRouter();
 
+  if (status === "loading") {
+    return <Loading />;
+  }
+
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status !== "authenticated") {
+      console.log("status", status);
+
       router.replace("/");
     }
   }, [status, router]);
