@@ -17,7 +17,7 @@ const OrderItem = async ({ order }: any) => {
 
   return (
     <div className="border border-[#D5D9D9] rounded-xl shadow-lg">
-      <div className="p-5 bg-[#f0f2f2] rounded-l-xl rounded-r-xl flex items-center justify-between">
+      <div className="p-5 bg-[#f0f2f2] rounded-t-xl rounded-tr-xl rounde flex items-center justify-between">
         <div>
           <p className="uppercase text-xs">Order Placed</p>
           <p className="text-sm">{orderDate}</p>
