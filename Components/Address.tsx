@@ -10,17 +10,15 @@ const Address = ({ addresses }: any) => {
   const { status } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    if (status !== "authenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
+
   if (status === "loading") {
     return <Loading />;
   }
-
-  // useEffect(() => {
-  //   if (status !== "authenticated") {
-  //     console.log("status", status);
-
-  //     router.replace("/");
-  //   }
-  // }, [status, router]);
 
   return (
     <section className="lg:px-20 gap-x-8 px-5 max-w-screen-xl mx-auto py-10">
