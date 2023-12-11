@@ -14,13 +14,13 @@ const Address = ({ addresses }: any) => {
     return <Loading />;
   }
 
-  useEffect(() => {
-    if (status !== "authenticated") {
-      console.log("status", status);
+  // useEffect(() => {
+  //   if (status !== "authenticated") {
+  //     console.log("status", status);
 
-      router.replace("/");
-    }
-  }, [status, router]);
+  //     router.replace("/");
+  //   }
+  // }, [status, router]);
 
   return (
     <section className="lg:px-20 gap-x-8 px-5 max-w-screen-xl mx-auto py-10">
