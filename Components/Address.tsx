@@ -13,6 +13,7 @@ const Address = ({ addresses }: any) => {
   useEffect(() => {
     if (status !== "authenticated") {
       router.replace("/");
+      console.log("status", status);
     }
   }, [status, router]);
 
