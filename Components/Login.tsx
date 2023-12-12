@@ -12,9 +12,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginHelper } from "@/utils/loginHelper";
 import Loading from "@/Components/Loading";
-import CryptoJS from "crypto-js";
-import bcrypt from "bcryptjs";
-import sjcl from "sjcl";
 
 interface Errors {
   username?: string;
@@ -75,33 +72,6 @@ const Login = () => {
       setLoading(false);
       setResErrors("Invalid email or pasword");
     }
-    // try {
-    //   const response = await fetch("/api/login", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ username, password }),
-    //   });
-
-    //   if (response.ok) {
-    //     // Successful login
-    //     setUsername("");
-    //     setPassword("");
-    //     setErrors({});
-    //     setLoading(false);
-    //     router.push("/");
-    //   } else {
-    //     // Failed login
-    //     setLoading(false);
-    //     setResErrors("Invalid email or password");
-    //   }
-    // } catch (error) {
-    //   console.error("Login error:", error);
-    //   setLoading(false);
-    //   setResErrors("An error occurred during login");
-    // }
-    // Reset the form fields and errors
   };
 
   const toggleShowPassword = () => {
