@@ -7,11 +7,8 @@ import { useSession } from "next-auth/react";
 import Loading from "./Loading";
 
 const Address = ({ addresses }: any) => {
-  const { data: session, status } = useSession({
+  const { status } = useSession({
     required: true,
-    onUnauthenticated() {
-      redirect("/login");
-    },
   });
   const router = useRouter();
 
