@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         "SELECT * FROM users WHERE email = ?",
         [session?.user.email]
       );
-      console.log("2");
+      console.log("2", getUser);
       const [newOrder]: any = await pool.execute(
         "INSERT INTO orders(orderno,userid,amount,status,transactionID,addressID) VALUES (?,?,?,?,?,?)",
         [orderno, getUser[0].id, total * 80, "initiated", orderno, 1]
