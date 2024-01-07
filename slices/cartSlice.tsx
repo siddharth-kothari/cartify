@@ -1,6 +1,7 @@
 "use client";
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 interface CartItem {
   id: number;
@@ -36,11 +37,41 @@ export const cartSlice = createSlice({
       if (existingItem) {
         if (action.payload.qty > 1) {
           existingItem.qty += action.payload.qty;
+          toast.success("Product quantity updated!!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         } else {
           existingItem.qty += action.payload.qty;
+          toast.success("Product quantity updated!!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       } else {
         state.items.push({ ...action.payload, qty: action.payload.qty });
+        toast.success("Product added to cart!!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
 
       state.count = state.items.length;
@@ -51,6 +82,17 @@ export const cartSlice = createSlice({
       state.items = state.items.filter((item) => item.id !== action.payload);
       state.count = state.items.length;
       saveCartToLocalStorage(state.items);
+
+      toast.success("Product removed from cart!!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     },
 
     increaseQTY: (state, action) => {
@@ -62,6 +104,16 @@ export const cartSlice = createSlice({
       }
       state.count = state.items.length;
       saveCartToLocalStorage(state.items);
+      toast.success("Product quantity increased!!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     },
 
     decreaseQTY: (state, action) => {
@@ -79,6 +131,16 @@ export const cartSlice = createSlice({
       }
       state.count = state.items.length;
       saveCartToLocalStorage(state.items);
+      toast.success("Product quantity decreased!!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     },
     loadCartFromLocalStorage: (state) => {
       if (typeof window !== "undefined" && window.localStorage) {
@@ -90,11 +152,17 @@ export const cartSlice = createSlice({
   },
 });
 
+const showAddToCartToast = () => ({
+  type: "SHOW_ADD_TO_CART_TOAST",
+});
+
 const saveCartToLocalStorage = (cartItems: CartItem[]) => {
   if (typeof window !== "undefined" && window.localStorage) {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }
 };
+
+// const dispatch = useDispatch();
 
 export const selectItems = (state: any) => state.cart.items;
 export const selectTotal = (state: any) =>

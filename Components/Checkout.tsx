@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { api } from "@/app/api";
 import { load } from "@cashfreepayments/cashfree-js";
 import Loading from "@/app/loading";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const items = useSelector(selectItems);
@@ -50,7 +51,16 @@ const Checkout = () => {
       cashfree.checkout(checkoutOptions);
     } else {
       setIsLoading(false);
-      alert("something went wrong");
+      toast.error("Something went wrong!!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
