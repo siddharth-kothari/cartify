@@ -75,7 +75,7 @@ const Checkout = () => {
   // }, [status, router]);
 
   return (
-    <section>
+    <section className="lg:px-20 gap-x-8 px-5 max-w-screen-xl mx-auto py-10 flex items-center justify-center">
       {items.length > 0 && (
         <div className="flex flex-col shadow-md p-5 bg-white m-5 md:my-5 md:ml-0 md:mr-5 h-max md:w-[25%]">
           <p className="text-md font-light !mt-1">

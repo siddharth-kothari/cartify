@@ -17,7 +17,7 @@ export async function OrderItems(orderid: any): Promise<string | undefined> {
 export async function getOrders(email: any): Promise<string | undefined> {
   try {
     const [orders]: any = await pool.execute(
-      "SELECT o.*,u.name FROM orders o JOIN users u ON u.id = o.userid WHERE o.status IN ('SUCCESS','FAILED') AND u.email = ?",
+      "SELECT o.*,u.name FROM orders o JOIN users u ON u.id = o.userid WHERE o.status IN ('SUCCESS','FAILED') AND u.email = ? order by updated_at desc",
       [email]
     );
 
