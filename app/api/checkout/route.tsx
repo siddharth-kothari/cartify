@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       console.log("2.2", items);
       for (const item of items) {
         var desc =
-          item.desc != ""
+          "desc" in item
             ? item.desc
             : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
         console.log("2.3", desc);
