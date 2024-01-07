@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { items, total } = await req.json();
     const orderno = "C-" + Math.floor(Date.now() / 1000);
     const session = await getServerSession();
-    console.log("1");
+    console.log("1", session);
     try {
       const [getUser]: any = await pool.execute(
         "SELECT * FROM users WHERE email = ?",
