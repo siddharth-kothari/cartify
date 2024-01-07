@@ -5,7 +5,7 @@ import { Cashfree } from "cashfree-pg";
 
 export async function POST(req: Request) {
   if (req.method === "POST") {
-    const { items, total } = await req.json();
+    const { items, total, addressid } = await req.json();
     const orderno = "C-" + Math.floor(Date.now() / 1000);
     const session = await getServerSession();
     //console.log("1", session);
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       //console.log("2", getUser);
       const [newOrder]: any = await pool.execute(
         "INSERT INTO orders(orderno,userid,amount,status,transactionID,addressID) VALUES (?,?,?,?,?,?)",
-        [orderno, getUser[0].id, total * 80, "initiated", orderno, 1]
+        [orderno, getUser[0].id, total * 80, "initiated", orderno, addressid]
       );
       //console.log("2.1", newOrder);
       //console.log("2.2", items);
