@@ -8,13 +8,13 @@ export async function POST(req: Request) {
     const { items, total } = await req.json();
     const orderno = "C-" + Math.floor(Date.now() / 1000);
     const session = await getServerSession();
-    //console.log("1");
+    console.log("1");
     try {
       const [getUser]: any = await pool.execute(
         "SELECT * FROM users WHERE email = ?",
         [session?.user.email]
       );
-      //console.log("2");
+      console.log("2");
       const [newOrder]: any = await pool.execute(
         "INSERT INTO orders(orderno,userid,amount,status,transactionID,addressID) VALUES (?,?,?,?,?,?)",
         [orderno, getUser[0].id, total * 80, "initiated", orderno, 1]
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
           },
           order_note: "",
         };
-        //console.log("5");
+        console.log("5");
 
         const response = await Cashfree.PGCreateOrder("2022-09-01", request);
         //console.log("response", response);
