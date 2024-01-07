@@ -33,7 +33,7 @@ export async function POST(req: Request) {
             getUser[0].id,
             item.id,
             item.name,
-            item.desc,
+            desc,
             item.image,
             item.price * 80,
             item.qty,
