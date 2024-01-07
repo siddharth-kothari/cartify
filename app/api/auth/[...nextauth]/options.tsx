@@ -19,6 +19,9 @@ const signInCallback: (
     return true;
   }
 
+  // console.log("user", user);
+  // console.log("account", account);
+
   if (account?.provider == "google") {
     try {
       const [existingUser]: any = await pool.execute(

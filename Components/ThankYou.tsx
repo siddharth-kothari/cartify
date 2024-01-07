@@ -5,6 +5,11 @@ import React from "react";
 
 const ThankYou = ({ orderno, status }: any) => {
   const router = useRouter();
+
+  if (status == "SUCCESS") {
+    localStorage.removeItem("cart");
+  }
+
   return (
     <section className="my-20 flex flex-col items-center justify-center w-full space-y-5">
       {status == "SUCCESS" && (

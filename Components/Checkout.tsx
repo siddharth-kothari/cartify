@@ -1,20 +1,23 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectItems, selectTotal } from "@/slices/cartSlice";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { api } from "@/app/api";
 import { load } from "@cashfreepayments/cashfree-js";
+import Loading from "@/app/loading";
 
 const Checkout = () => {
   const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
-  const router = useRouter();
-  const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
+  // const router = useRouter();
+  const { data: session } = useSession();
 
   const handleCartCheckout = async () => {
+    setIsLoading(true);
     const data = JSON.stringify({
       total,
       items,
@@ -31,25 +34,35 @@ const Checkout = () => {
       { headers }
     );
 
-    //console.log("sessID", res.data.data);
+    console.log("sessID", res.data);
 
-    const cashfree = await load({
-      mode: "sandbox",
-    });
+    if (res.data.status === 201) {
+      setIsLoading(false);
+      const cashfree = await load({
+        mode: "sandbox",
+      });
 
-    let checkoutOptions = {
-      paymentSessionId: res.data.data,
-      redirectTarget: "_self", //optional (_self or _blank)
-    };
+      let checkoutOptions = {
+        paymentSessionId: res.data.data,
+        redirectTarget: "_self", //optional (_self or _blank)
+      };
 
-    cashfree.checkout(checkoutOptions);
+      cashfree.checkout(checkoutOptions);
+    } else {
+      setIsLoading(false);
+      alert("something went wrong");
+    }
   };
 
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.replace("/");
-    }
-  }, [status, router]);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  // useEffect(() => {
+  //   if (status !== "authenticated") {
+  //     router.replace("/");
+  //   }
+  // }, [status, router]);
 
   return (
     <section>
