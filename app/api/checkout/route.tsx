@@ -20,6 +20,7 @@ export async function POST(req: Request) {
         [orderno, getUser[0].id, total * 80, "initiated", orderno, 1]
       );
       console.log("2.1", newOrder);
+      console.log("2.2", items);
       for (const item of items) {
         const [newOrderDetail]: any = await pool.execute(
           "INSERT INTO order_items(orderid,userid,item_id,item_name,description,image,amount,qty) VALUES (?,?,?,?,?,?,?,?)",
