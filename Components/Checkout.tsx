@@ -99,7 +99,7 @@ const Checkout = ({ addresses }: any) => {
         </div>
 
         {addresses.map((address: any) => (
-          <div className="flex gap-2 border p-5 mt-5">
+          <div className="flex gap-2 border p-5 mt-4">
             <input
               type="radio"
               key={address.id}
