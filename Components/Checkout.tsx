@@ -20,6 +20,20 @@ const Checkout = ({ addresses }: any) => {
   const { data: session } = useSession();
 
   const handleCartCheckout = async () => {
+    if (selectedAddress == "") {
+      toast.error("Please select an address to continue", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     setIsLoading(true);
     const data = JSON.stringify({
       total,
@@ -78,7 +92,7 @@ const Checkout = ({ addresses }: any) => {
   // }, [status, router]);
 
   return (
-    <section className="lg:px-20 gap-x-8 px-5 md:px-20 mx-auto py-10 flex items-center justify-center md:flex max-w-screen-2xl">
+    <section className="lg:px-20 gap-x-8 px-5 md:px-20 mx-auto py-10 flex justify-center md:flex max-w-screen-2xl">
       <div className="m-5 shadow-sm md:w-[75%] bg-white p-5">
         <div className="flex-col space-y-10 bg-white w-full">
           <h1 className="text-2xl border-b pb-3">Select a delivery address</h1>
