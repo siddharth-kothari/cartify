@@ -8,7 +8,8 @@ export async function generateMetadata({ params }: any) {
   );
 
   return {
-    title: data.title + " | " + data.brand + " | " + data.category,
+    title:
+      data.title + " | " + data.brand + " | " + data.category + " | Cartify",
     description: data.description,
     openGraph: {
       title: data.title,

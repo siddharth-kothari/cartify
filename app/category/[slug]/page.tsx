@@ -2,6 +2,21 @@
 import Product from "@/Components/Product";
 import { api } from "@/app/api";
 
+export async function generateMetadata({ params }: any) {
+  const { slug } = params;
+  const title = slug.charAt(0).toUpperCase() + slug.slice(1);
+  return {
+    title: title + " | Cartify",
+    // description: description,
+    // openGraph: {
+    //   title: title,
+    //   description: description,
+    //   type: "website",
+    //   images: [thumbnail],
+    // },
+  };
+}
+
 export default async function CategoryPage({ params }: any) {
   const { slug } = params;
   const { data } = await api.get(

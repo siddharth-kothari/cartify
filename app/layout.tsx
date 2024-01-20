@@ -6,6 +6,7 @@ import Footer from "@/Components/Footer";
 import { api } from "./api";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Cartify",
@@ -43,6 +44,7 @@ export default async function RootLayout({
             theme="dark"
           />
           {children}
+          <SpeedInsights />
           <Footer categories={categories} />
         </Provider>
       </body>
