@@ -52,7 +52,7 @@ const Checkout = ({ addresses }: any) => {
       { headers }
     );
 
-    console.log("sessID", res.data);
+    //console.log("sessID", res.data);
 
     if (res.data.status === 201) {
       setIsLoading(false);

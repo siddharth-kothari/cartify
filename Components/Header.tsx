@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MagnifyingGlassIcon,
   ShoppingCartIcon,
@@ -11,6 +11,8 @@ import { signOut, useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/utils/store";
 import { useRouter } from "next/navigation";
+import { api } from "@/app/api";
+import SearchResult from "./SearchResult";
 
 const Header = ({ categories }: any) => {
   const { data: session } = useSession();
@@ -18,6 +20,9 @@ const Header = ({ categories }: any) => {
   const username = name ? name[0] : "";
   const items = useSelector((state: RootState) => state.cart.count);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const router = useRouter();
 
   const toggleProfileDropdown = () => {
@@ -29,6 +34,26 @@ const Header = ({ categories }: any) => {
       router.replace("/login");
     }
   };
+
+  const handleSearch = (keyword: string) => {
+    setTimeout(() => {
+      setSearch(keyword);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const getSearchResults = async () => {
+      const { data } = await api.get(
+        `${process.env.NEXT_PUBLIC_STORE_BASE_URL}products/search?limit=5&q=${search}`
+      );
+
+      setSearchResults(data.products);
+    };
+    getSearchResults();
+  }, [search]);
+
+  const openResult = () => setShowResults(true);
+  const closeResult = () => setShowResults(false);
 
   return (
     <header className="sticky top-0 z-20">
@@ -43,14 +68,18 @@ const Header = ({ categories }: any) => {
           </Link>
         </div>
 
-        <div className="flex space-x-5">
-          <div className="hidden border-b border-black sm:flex items-center  cursor-pointer  flex-grow">
-            <input
-              type="text"
-              className="h-full flex-grow bg-[#f7f7f7] outline-none b"
-              placeholder="Search..."
-            />
-            <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+        <div className="flex space-x-5 relative">
+          <div className="hidden border-b border-black sm:flex items-center cursor-pointer  flex-grow">
+            <div className="hidden border-b border-black sm:flex items-center cursor-pointer  flex-grow">
+              <input
+                type="text"
+                className="h-full flex-grow bg-[#f7f7f7] outline-none b"
+                placeholder="Search..."
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={openResult}
+              />
+              <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+            </div>
           </div>
           <div
             className="link relative grid justify-end items-end p-0 cursor-pointer"
@@ -103,6 +132,12 @@ const Header = ({ categories }: any) => {
               <ShoppingCartIcon className="h-6 w-6 text-black" />
             </Link>
           </div>
+          {showResults && search != "" && (
+            <SearchResult
+              searchResults={searchResults}
+              isResultOpen={closeResult}
+            />
+          )}
         </div>
       </div>
 

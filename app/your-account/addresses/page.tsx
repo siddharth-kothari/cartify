@@ -6,7 +6,7 @@ import React from "react";
 
 const AddressesPage = async () => {
   const session = await getServerSession();
-  // //console.log("session", session);
+  // ////console.log("session", session);
 
   if (session == null) {
     redirect("/login");

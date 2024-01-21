@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const OrderItem = async ({ order }: any) => {
   const items: any = await OrderItems(order.id);
-  ////console.log(items);
+  //////console.log(items);
   const dateString = order.updated_at;
   const dateObject = new Date(dateString);
 

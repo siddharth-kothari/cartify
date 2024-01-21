@@ -19,9 +19,9 @@ export async function POST(req: Request) {
 
     const session = await getServerSession();
 
-    //console.log(session);
+    ////console.log(session);
     try {
-      //console.log("2");
+      ////console.log("2");
       const [getUser]: any = await pool.execute(
         "SELECT * FROM users WHERE email = ?",
         [session?.user.email]
@@ -58,9 +58,9 @@ export async function POST(req: Request) {
           type,
         ]
       );
-      //console.log("3");
+      ////console.log("3");
       if (addAddress.affectedRows == 1) {
-        //console.log("4");
+        ////console.log("4");
         return NextResponse.json(
           { message: "Address added successfully !!", status: 201 },
           { status: 201 }
@@ -71,16 +71,16 @@ export async function POST(req: Request) {
           { status: 400 }
         );
       }
-      //console.log("5");
+      ////console.log("5");
     } catch (error: any) {
-      //console.log(error);
+      ////console.log(error);
       return NextResponse.json(
         { message: error.sqlMessage, status: 500 },
         { status: 500 }
       );
     }
   } else {
-    //console.log("6");
+    ////console.log("6");
     return NextResponse.json(
       { message: "Method not allowed", status: 405 },
       { status: 405 }

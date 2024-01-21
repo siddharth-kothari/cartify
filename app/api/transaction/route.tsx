@@ -5,9 +5,9 @@ export async function POST(req: Request) {
   if (req.method === "POST") {
     try {
       // Parse the JSON data from the request body
-      //console.log("Processing complete");
+      ////console.log("Processing complete");
       const { data } = await req.json();
-      //console.log("Received data:", data.order.order_id);
+      ////console.log("Received data:", data.order.order_id);
 
       const inputDateString = data.payment.payment_time;
       const inputDate = new Date(inputDateString);
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       const seconds = String(inputDate.getSeconds()).padStart(2, "0");
 
       const outputDateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-      //console.log(outputDateString);
+      ////console.log(outputDateString);
 
       const [updateOrder]: any = await pool.execute(
         "UPDATE orders SET status = ?, method = ?, bank_ref = ?, updated_at = ? WHERE orderno = ?",
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       );
     }
   } else {
-    //console.log("Method not allowed");
+    ////console.log("Method not allowed");
     return NextResponse.json(
       { message: "Method not allowed", status: 405 },
       { status: 405 }

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const CheckoutPage = async () => {
   const session = await getServerSession();
-  // //console.log("session", session);
+  // ////console.log("session", session);
 
   if (session == null) {
     redirect("/");
