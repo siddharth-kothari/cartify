@@ -2,10 +2,11 @@ import { OrderItems } from "@/utils/functions";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const OrderItem = async ({ order }: any) => {
   const items: any = await OrderItems(order.id);
-  //////console.log(items);
+
   const dateString = order.updated_at;
   const dateObject = new Date(dateString);
 
@@ -14,6 +15,12 @@ const OrderItem = async ({ order }: any) => {
     month: "long",
     year: "numeric",
   });
+
+  const formattedAmount = (amount: any) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(amount);
 
   return (
     <div className="border border-[#D5D9D9] rounded-xl shadow-lg mb-10">
@@ -25,7 +32,7 @@ const OrderItem = async ({ order }: any) => {
 
         <div>
           <p className="uppercase text-xs">total</p>
-          <p className="text-sm">₹ {order.amount}</p>
+          <p className="text-sm">{formattedAmount(order.amount)}</p>
         </div>
 
         <div>
@@ -64,7 +71,7 @@ const OrderItem = async ({ order }: any) => {
                 </Link>
               </div>
               <p className="text-black">
-                ₹ <span>{item.amount * 80}</span>
+                <span>{formattedAmount(item.amount * item.qty)}</span>
               </p>
             </div>
 

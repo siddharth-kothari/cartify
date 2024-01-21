@@ -145,7 +145,7 @@ const Header = ({ categories }: any) => {
       </div>
 
       {/* Bottom Nav */}
-      <div className="flex border relative border-black sm:hidden items-center cursor-pointer flex-grow mx-5 my-3 rounded-full p-3">
+      <div className="flex bg-[#f7f7f7] border relative border-black sm:hidden items-center cursor-pointer flex-grow mx-5 my-3 rounded-full p-3">
         <input
           type="text"
           className="h-full flex-grow bg-[#f7f7f7] outline-none b"

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { decreaseQTY, increaseQTY, removeFromCart } from "../slices/cartSlice";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const CartItem = ({ item }: any) => {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ const CartItem = ({ item }: any) => {
           </div>
         </div>
         <p className="text-black">
-          ₹ <span>{item.price * 80}</span>
+          <span>{currencyFormatter(item.price * 80)}</span>
         </p>
       </div>
 

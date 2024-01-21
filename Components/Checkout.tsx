@@ -10,6 +10,7 @@ import { load } from "@cashfreepayments/cashfree-js";
 import Loading from "@/app/loading";
 import { toast } from "react-toastify";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const Checkout = ({ addresses }: any) => {
   const items = useSelector(selectItems);
@@ -131,7 +132,8 @@ const Checkout = ({ addresses }: any) => {
         <div className="flex flex-col shadow-md p-5 bg-white m-5 md:my-5 md:ml-0 md:mr-5 h-max md:w-[25%]">
           <p className="text-md font-light !mt-1">
             Subtotal ({items.length}
-            {items.length === 1 ? " item" : " items"}) : ₹ {total * 80}
+            {items.length === 1 ? " item" : " items"}) :{" "}
+            {currencyFormatter(total * 80)}
           </p>
 
           <button className="button mt-3" onClick={handleCartCheckout}>

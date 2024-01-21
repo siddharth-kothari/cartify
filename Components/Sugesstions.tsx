@@ -2,6 +2,7 @@ import { api } from "@/app/api";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const Suggestions = ({ category, id }: any) => {
   const [suggest, setSuggestions] = useState([]);
@@ -43,7 +44,7 @@ const Suggestions = ({ category, id }: any) => {
               <Link href={`/product/${item.id}`} className=" capitalize">
                 {item.title}
               </Link>
-              <p>₹ {item.price * 80}</p>
+              <p>{currencyFormatter(item.price * 80)}</p>
             </div>
           </div>
         ))}

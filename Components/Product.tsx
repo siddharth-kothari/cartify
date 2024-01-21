@@ -6,6 +6,7 @@ import { star } from "./../assets";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../slices/cartSlice";
 import Link from "next/link";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const Product = ({ product }: any) => {
   const [rating] = useState(Math.round(product.rating));
@@ -57,17 +58,7 @@ const Product = ({ product }: any) => {
           ))}
       </div>
       <p className="text-xs my-2 line-clamp-2">{product.description}</p>
-      <div className="mb-5">
-        {/* <Currency quantity={product.price * 80} currency="INR" /> */}
-        {/* <CurrencyFormat
-          value={product.price * 80}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"₹ "}
-          thousandSpacing={"2s"}
-        /> */}
-        ₹ {product.price * 80}
-      </div>
+      <div className="mb-5">{currencyFormatter(product.price * 80)}</div>
 
       <button onClick={() => addItemToCart()} className="mt-auto button">
         Add to Cart

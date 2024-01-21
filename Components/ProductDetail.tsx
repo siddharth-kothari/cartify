@@ -7,6 +7,7 @@ import { addToCart, selectItems } from "@/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Sugesstions from "./Sugesstions";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const ProductDetail = ({ product }: any) => {
   const items = useSelector(selectItems);
@@ -94,7 +95,7 @@ const ProductDetail = ({ product }: any) => {
             </div>
             <p className="text-xs">{reviews} reviews</p>
           </div>
-          <p>₹ {product.price * 80}</p>
+          <p>{currencyFormatter(product.price * 80)}</p>
           <div className="flex space-x-3 items-center">
             <div className="flex space-x-2 items-center">
               <button

@@ -6,6 +6,7 @@ import CartItem from "./CartItem";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { selectItems, selectTotal } from "@/slices/cartSlice";
+import { currencyFormatter } from "./CurrencyFormatter";
 
 const Cart = () => {
   const items = useSelector(selectItems);
@@ -36,7 +37,8 @@ const Cart = () => {
           {items.length > 0 && (
             <p className="text-md font-light !mt-1 text-right">
               Subtotal ({items.length}
-              {items.length === 1 ? " item" : " items"}) : ₹ {total * 80}
+              {items.length === 1 ? " item" : " items"}) :{" "}
+              {currencyFormatter(total * 80)}
             </p>
           )}
         </div>
@@ -46,7 +48,8 @@ const Cart = () => {
         <div className="flex flex-col shadow-md p-5 bg-white m-5 md:my-5 md:ml-0 md:mr-5 h-max md:w-[25%]">
           <p className="text-md font-light !mt-1">
             Subtotal ({items.length}
-            {items.length === 1 ? " item" : " items"}) : ₹ {total * 80}
+            {items.length === 1 ? " item" : " items"}) :{" "}
+            {currencyFormatter(total * 80)}
           </p>
 
           <button className="button mt-3" onClick={handleCartCheckout}>
