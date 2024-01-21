@@ -21,6 +21,7 @@ const Header = ({ categories }: any) => {
   const items = useSelector((state: RootState) => state.cart.count);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showResultsMobile, setShowResultsMobile] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const router = useRouter();
@@ -54,6 +55,8 @@ const Header = ({ categories }: any) => {
 
   const openResult = () => setShowResults(true);
   const closeResult = () => setShowResults(false);
+  const openResultMobile = () => setShowResultsMobile(true);
+  const closeResultMobile = () => setShowResultsMobile(false);
 
   return (
     <header className="sticky top-0 z-20">
@@ -142,6 +145,22 @@ const Header = ({ categories }: any) => {
       </div>
 
       {/* Bottom Nav */}
+      <div className="flex border relative border-black sm:hidden items-center cursor-pointer flex-grow mx-5 my-3 rounded-full p-3">
+        <input
+          type="text"
+          className="h-full flex-grow bg-[#f7f7f7] outline-none b"
+          placeholder="Search..."
+          onChange={(e) => handleSearch(e.target.value)}
+          onFocus={openResultMobile}
+        />
+        <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+      </div>
+      {showResultsMobile && search != "" && (
+        <SearchResult
+          searchResults={searchResults}
+          isResultOpen={closeResultMobile}
+        />
+      )}
       <div className="bg-[#f7f7f7] hidden text-black lg:flex items-center justify-between p-4 lg:px-20 pb-6 text-sm">
         {categories.map((category: string, i: number) => (
           <Link
